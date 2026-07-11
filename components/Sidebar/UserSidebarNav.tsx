@@ -1,9 +1,22 @@
-import { EllipsisVerticalIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { SidebarMenu } from "./ui/sidebar";
-import { Text } from "./ui/text";
+import {
+  EllipsisVerticalIcon,
+  LogOutIcon,
+  SettingsIcon,
+  UserIcon,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { SidebarMenu } from "../ui/sidebar";
+import { Text } from "../ui/text";
 
 export default function UserSidebarNav() {
   return (
@@ -40,17 +53,17 @@ export default function UserSidebarNav() {
             <DropdownMenuLabel className="py-2">Account</DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <UserIcon/>
+                <UserIcon />
                 Profile
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <SettingsIcon/>
+                <SettingsIcon />
                 Settings
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive">
-              <LogOutIcon/>
+              <LogOutIcon />
               Sign Out
             </DropdownMenuItem>
           </DropdownMenuContent>
