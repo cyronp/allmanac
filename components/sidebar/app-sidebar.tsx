@@ -12,9 +12,9 @@ import {
 import { Text } from "../ui/text";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import UserSidebarNav from "./UserSidebarNav";
+import UserSidebarNav from "./user-sidebar-nav";
 
-export default function AppSideBar() {
+export default function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>

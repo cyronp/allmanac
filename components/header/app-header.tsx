@@ -1,6 +1,6 @@
 import { BellIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import NotificationAction from "../Notifications/NotificationAction";
+import NotificationAction from "../notifications/notification-action";
 
 export default function AppHeader() {
   return (

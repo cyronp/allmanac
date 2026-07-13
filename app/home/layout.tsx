@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import AppSideBar from "@/components/Sidebar/AppSideBar";
-import AppHeader from "@/components/Header/AppHeader";
+import AppSidebar from "@/components/sidebar/app-sidebar";
+import AppHeader from "@/components/header/app-header";
 
 export default function AppLayout({
   children,
@@ -9,7 +9,7 @@ export default function AppLayout({
 }>) {
   return (
     <SidebarProvider className="p-2">
-      <AppSideBar />
+      <AppSidebar />
       <SidebarTrigger size="icon-lg" />
       <AppHeader />
       {children}
