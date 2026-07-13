@@ -4,7 +4,7 @@ import { Slot } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
-const textVariants = cva("font-sans leading-7 transition-colors", {
+const textVariants = cva("font-sans transition-colors", {
   variants: {
     variant: {
       default: "text-foreground",
