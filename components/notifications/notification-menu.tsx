@@ -130,12 +130,12 @@ export default function NotificationMenu({
               />
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center py-10 px-4 text-center select-none">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/50 text-muted-foreground mb-3">
-                <BellOffIcon className="h-5 w-5" />
+            <div className="flex flex-col items-center justify-center p-6 text-center select-none">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full text-muted-foreground">
+                <BellOffIcon size={32} />
               </div>
               <Text as="p" className="text-sm font-medium text-foreground">
-                All caught up!
+                Great Job!
               </Text>
               <Text as="span" variant="muted" className="text-xs mt-1">
                 You have no new notifications at the moment.
