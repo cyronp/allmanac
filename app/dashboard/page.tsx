@@ -1,0 +1,82 @@
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import PendencyCard from "@/components/dashboard/pendency-card";
+import PendencyContainer from "@/components/dashboard/pendency-container";
+
+interface AppPageProps {
+  username: string;
+}
+
+export default function AppPage({ username }: AppPageProps) {
+  username = "Cyronp";
+
+  return (
+    <div className="relative w-full h-full z-0 overflow-hidden">
+      {/* Content wrapper - guaranteed to sit on top of background glows */}
+      <div className="relative z-10 flex flex-col w-full h-full gap-4">
+        {/* Heading */}
+        <div className="flex flex-col mb-4">
+          <Heading as="h1" className="text-4xl tracking-tight">
+            Good to see you {username}!
+          </Heading>
+          <Text
+            as="span"
+            className="text-lg text-muted-foreground tracking-tighter"
+          >
+            Let's have a better life cycle together!
+          </Text>
+        </div>
+        {/* Today/Upcoming pendencies grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          {/* Left Column: Today's Pendencies */}
+          <PendencyContainer
+            title="Today's pendencies"
+            href="dashboard/calendar"
+          >
+            <PendencyCard
+              title="Hobby 1"
+              startTime="07:00"
+              endTime="08:00"
+              url="#"
+            />
+            <PendencyCard
+              title="Hobby 2"
+              startTime="09:30"
+              endTime="10:30"
+              url="#"
+            />
+            <PendencyCard
+              title="Hobby 3"
+              startTime="14:00"
+              endTime="15:30"
+              url="#"
+            />
+          </PendencyContainer>
+
+          {/* Right Column: Upcoming Pendencies */}
+          <PendencyContainer title="Upcoming pendencies" href="dashboard/calendar">
+            <PendencyCard
+              title="Design Review"
+              date="Tomorrow"
+              startTime="10:00"
+              endTime="11:30"
+              url="#"
+            />
+            <PendencyCard
+              title="Dentist Appointment"
+              date="Wednesday"
+              startTime="14:00"
+              endTime="15:00"
+            />
+            <PendencyCard
+              title="Gym Session"
+              date="Thursday"
+              startTime="18:00"
+              endTime="19:30"
+            />
+          </PendencyContainer>
+        </div>
+      </div>
+    </div>
+  );
+}

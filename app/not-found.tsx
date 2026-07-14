@@ -6,7 +6,8 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-4">
+    <div className="relative flex flex-col justify-center items-center h-screen max-h-screen overflow-hidden gap-4">
+      <div className="absolute -z-10 pointer-events-none h-96 w-[120%] blur-[120px] rounded-full bg-linear-180 from-accent/80 to-primary -bottom-20 opacity-40 " />
       <div className="flex flex-col justify-center items-center w-full">
         <Text
           weight="extrabold"

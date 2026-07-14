@@ -1,3 +1,5 @@
+"use client";
+
 import {
   EllipsisVerticalIcon,
   LogOutIcon,
@@ -5,7 +7,6 @@ import {
   UserIcon,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,41 +16,53 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { SidebarMenu } from "../ui/sidebar";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "../ui/sidebar";
 import { Text } from "../ui/text";
 
 export default function UserSidebarNav() {
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
+
   return (
     <SidebarMenu>
-      <div className="flex flex-row items-center justify-between w-full gap-2">
-        <div className="flex flex-row items-center gap-2 min-w-0">
-          <Avatar size="lg" className="shrink-0">
-            <AvatarImage src="https://github.com/cyronp.png" />
-            <AvatarFallback>am</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col min-w-0 gap-1">
-            <Text
-              as="p"
-              className="text-sm font-semibold truncate leading-none"
-            >
-              Cyronp
-            </Text>
-            <Text
-              as="span"
-              variant="muted"
-              className="text-xs truncate leading-none"
-            >
-              Current streak: 352
-            </Text>
-          </div>
-        </div>
+      <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-lg" className="shrink-0">
-              <EllipsisVerticalIcon />
-            </Button>
+            <SidebarMenuButton
+              size="lg"
+              className="h-14 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              {isCollapsed ? (
+                /* Fill the entire collapsed button with the avatar */
+                <Avatar className="rounded-md">
+                  <AvatarImage src="https://github.com/cyronp.png" className="rounded-md" />
+                  <AvatarFallback className="rounded-md">am</AvatarFallback>
+                </Avatar>
+              ) : (
+                <Avatar size="default" className="shrink-0">
+                  <AvatarImage src="https://github.com/cyronp.png" />
+                  <AvatarFallback>am</AvatarFallback>
+                </Avatar>
+              )}
+              {!isCollapsed && (
+                <div className="flex flex-col min-w-0 gap-0.5">
+                  <Text as="p" className="text-sm font-semibold truncate leading-none">
+                    Cyronp
+                  </Text>
+                  <Text as="span" className="text-xs truncate leading-none text-muted-foreground">
+                    Current streak: 352
+                  </Text>
+                </div>
+              )}
+              {!isCollapsed && <EllipsisVerticalIcon className="ml-auto shrink-0" />}
+            </SidebarMenuButton>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="min-w-56">
+          <DropdownMenuContent className="min-w-56" side="right" align="end">
             <DropdownMenuLabel className="py-2">Account</DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem>
@@ -68,7 +81,8 @@ export default function UserSidebarNav() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </SidebarMenuItem>
     </SidebarMenu>
   );
 }
+

@@ -1,12 +1,15 @@
 import NotificationMenu from "../notifications/notification-menu";
 import NotificationButton from "../notifications/notification-button";
+import { DynamicBreadcrumb } from "../ui/dynamic-breadcrumb";
 
 export default function AppHeader() {
   return (
-    <header className="absolute flex flex-row gap-4 right-4">
+    <div className="flex flex-1 items-center justify-between">
+      <DynamicBreadcrumb />
       <NotificationMenu
         NotificationsTrigger={<NotificationButton hasNotification />}
       />
-    </header>
+    </div>
   );
 }
+

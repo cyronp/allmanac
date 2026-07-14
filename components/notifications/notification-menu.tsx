@@ -137,7 +137,7 @@ export default function NotificationMenu({
               <Text as="p" className="text-sm font-medium text-foreground">
                 Great Job!
               </Text>
-              <Text as="span" variant="muted" className="text-xs mt-1">
+              <Text as="span" className="text-xs mt-1 text-muted-foreground">
                 You have no new notifications at the moment.
               </Text>
             </div>

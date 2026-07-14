@@ -6,16 +6,6 @@ import { cn } from "@/lib/utils";
 
 const textVariants = cva("font-sans transition-colors", {
   variants: {
-    variant: {
-      default: "text-foreground",
-      muted: "text-muted-foreground",
-      lead: "text-xl text-muted-foreground font-normal",
-      large: "text-lg font-semibold text-foreground",
-      small: "text-sm font-medium leading-none text-foreground",
-      xs: "text-xs font-medium leading-none text-foreground",
-      blockquote:
-        "mt-6 border-l-2 border-border pl-6 italic text-muted-foreground",
-    },
     align: {
       left: "text-left",
       center: "text-center",
@@ -32,8 +22,8 @@ const textVariants = cva("font-sans transition-colors", {
     },
   },
   defaultVariants: {
-    variant: "default",
     align: "left",
+    weight: "normal",
   },
 });
 
@@ -45,13 +35,13 @@ export interface TextProps
 
 const Text = React.forwardRef<HTMLElement, TextProps>(
   (
-    { className, variant, align, weight, asChild = false, as = "p", ...props },
+    { className, align, weight, asChild = false, as = "p", ...props },
     ref,
   ) => {
     const Comp = asChild ? Slot.Root : as;
     return (
       <Comp
-        className={cn(textVariants({ variant, align, weight, className }))}
+        className={cn(textVariants({ align, weight, className }))}
         ref={ref as any}
         {...props}
       />

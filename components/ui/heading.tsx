@@ -8,28 +8,23 @@ const headingVariants = cva(
   "font-heading tracking-tight transition-colors",
   {
     variants: {
-      level: {
-        h1: "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
-        h2: "scroll-m-20 border-b border-border pb-2 text-3xl font-semibold first:mt-0",
-        h3: "scroll-m-20 text-2xl font-semibold",
-        h4: "scroll-m-20 text-xl font-semibold",
-        h5: "scroll-m-20 text-lg font-semibold",
-        h6: "scroll-m-20 text-base font-semibold",
-      },
-      gradient: {
-        true: "bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent",
-        primary: "bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent",
-        accent: "bg-gradient-to-r from-accent to-accent-foreground bg-clip-text text-transparent",
-      },
       align: {
         left: "text-left",
         center: "text-center",
         right: "text-right",
       },
+      weight: {
+        light: "font-light",
+        normal: "font-normal",
+        medium: "font-medium",
+        semibold: "font-semibold",
+        bold: "font-bold",
+        extrabold: "font-extrabold",
+      },
     },
     defaultVariants: {
-      level: "h1",
       align: "left",
+      weight: "bold",
     },
   }
 )
@@ -42,11 +37,11 @@ export interface HeadingProps
 }
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({ className, level = "h1", gradient, align, asChild = false, as, ...props }, ref) => {
-    const Comp = asChild ? Slot.Root : as || level || "h1"
+  ({ className, align, weight, asChild = false, as = "h1", ...props }, ref) => {
+    const Comp = asChild ? Slot.Root : as
     return (
       <Comp
-        className={cn(headingVariants({ level, gradient, align, className }))}
+        className={cn(headingVariants({ align, weight, className }))}
         ref={ref as any}
         {...props}
       />

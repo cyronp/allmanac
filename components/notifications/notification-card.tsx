@@ -49,8 +49,7 @@ export default function NotificationCard({
 
         <Text
           as="p"
-          variant="muted"
-          className="text-xs leading-normal line-clamp-2 wrap-break-words"
+          className="text-xs leading-normal line-clamp-2 break-words text-muted-foreground"
         >
           {description}
         </Text>
@@ -64,8 +63,7 @@ export default function NotificationCard({
           )}
           <Text
             as="span"
-            variant="muted"
-            className="text-xs font-medium tracking-wider"
+            className="text-xs font-medium tracking-wider text-muted-foreground"
           >
             {time}
           </Text>
