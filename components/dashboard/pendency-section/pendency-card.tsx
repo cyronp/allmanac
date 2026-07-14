@@ -25,9 +25,9 @@ export default function PendencyCard({
           {title}
         </Heading>
         {url ? (
-          <Text asChild as="span" className="group flex flex-row items-center">
+          <Text asChild as="span" className="group flex flex-row items-center hover:underline decoration-2">
             <Link href={url || ""}>
-              Go to{" "}
+              Go to
               <ArrowUpRight
                 size={18}
                 className="group-hover:-translate-y-1 group-hover:translate-x-1 duration-200 transition-all"
@@ -57,7 +57,7 @@ export default function PendencyCard({
             </Text>
             {endTime && (
               <>
-                <ArrowRight size={16} />
+              -
                 <Text as="span" className="text-base">
                   {endTime}
                 </Text>

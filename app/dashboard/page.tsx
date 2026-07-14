@@ -1,7 +1,7 @@
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import PendencyCard from "@/components/dashboard/pendency-card";
-import PendencyContainer from "@/components/dashboard/pendency-container";
+import PendencyCard from "@/components/dashboard/pendency-section/pendency-card";
+import PendencyContainer from "@/components/dashboard/pendency-section/pendency-container";
 
 interface AppPageProps {
   username: string;
