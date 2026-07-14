@@ -49,23 +49,20 @@ export default function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              asChild
               size="lg"
               className="hover:bg-transparent active:bg-transparent"
             >
-              <Link href="/dashboard">
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <SquareDashed size={18} />
-                </div>
-                {!isCollapsed && (
-                  <Text
-                    as="span"
-                    className="text-primary text-3xl tracking-tighter font-extrabold"
-                  >
-                    allmanac
-                  </Text>
-                )}
-              </Link>
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <SquareDashed size={18} />
+              </div>
+              {!isCollapsed && (
+                <Text
+                  as="span"
+                  className="text-primary text-3xl tracking-tighter font-extrabold"
+                >
+                  allmanac
+                </Text>
+              )}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
