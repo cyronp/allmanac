@@ -17,10 +17,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
+  SidebarTrigger,
   useSidebar,
 } from "../ui/sidebar";
-import { Text } from "../ui/text";
 import UserSidebarNav from "./user-sidebar-nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -45,27 +44,15 @@ export default function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              className="hover:bg-transparent active:bg-transparent"
-            >
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <SquareDashed size={18} />
-              </div>
-              {!isCollapsed && (
-                <Text
-                  as="span"
-                  className="text-primary text-3xl tracking-tighter font-extrabold"
-                >
-                  allmanac
-                </Text>
-              )}
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarHeader className="h-14 justify-center">
+        <div className="flex items-center justify-between w-full">
+          {!isCollapsed && (
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <SquareDashed size={18} />
+            </div>
+          )}
+          <SidebarTrigger size="icon-lg" />
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
@@ -118,10 +105,9 @@ export default function AppSidebar() {
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border h-16 justify-center">
+      <SidebarFooter className="h-16 justify-center">
         <UserSidebarNav />
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }
