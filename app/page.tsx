@@ -1,42 +1,54 @@
+import { CyclingText } from "@/components/ui/cycling-text";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import {
-  ArrowRight,
-  SquareDashed,
-} from "lucide-react";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import GoogleIcon from "@/components/icons/google-icon";
+import GithubIcon from "@/components/icons/github-icon";
 
 export default function Home() {
+  let words = ["tasks", "goals", "hobbies"];
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-background text-foreground selection:bg-primary/30">
-      {/* Ambient background glows */}
-      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        {/* Radial glow 1 */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[120px]" />
-        {/* Radial glow 2 */}
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[150px]" />
-        {/* Subtle grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-30" />
-      </div>
-
-      {/* Header */}
-      <header className="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center z-10">
-        <div className="inline-flex gap-2.5 items-center select-none">
-          <SquareDashed className="text-primary" size={28} />
-          <Text
-            as="span"
-            className="text-primary text-2xl tracking-tighter font-extrabold"
+    <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-background px-4">
+      <div className="flex flex-col justify-center items-center bg-card w-full min-w-70 max-w-105 sm:max-w-120 px-5 sm:px-6 py-8 rounded-lg">
+        <header className="flex flex-col items-center gap-3 w-full">
+          <Heading
+            as="h1"
+            className="text-2xl sm:text-3xl tracking-tight leading-tight font-semibold text-center"
           >
-            allmanac
+            Welcome to
+            <br />
+            <Text
+              as="span"
+              className="text-primary text-2xl sm:text-3xl tracking-tighter font-extrabold text-center"
+            >
+              allmanac
+            </Text>
+          </Heading>
+          <Text
+            as="p"
+            className="inline-flex gap-1 w-full text-center items-center justify-center text-muted-foreground font-medium text-sm sm:text-base "
+          >
+            Start your journey now and organized your
+            <CyclingText
+              words={words}
+              className="text-transparent bg-clip-text bg-linear-90 from-primary to-lime-100"
+            />
           </Text>
-        </div>
-        <Link href="/dashboard">
-          <Button variant="outline" size="default">
-            Go to App <ArrowRight className="ml-1 size-4" />
+          <Separator />
+          <Button className="w-full h-11 sm:h-12" variant="secondary" asChild>
+            <Link href="/dashboard">
+              <GoogleIcon /> Login with Google
+            </Link>
           </Button>
-        </Link>
-      </header>
+          <Button className="w-full h-11 sm:h-12" variant="secondary" asChild>
+            <Link href="/dashboard">
+              <GithubIcon /> Login with Github
+            </Link>
+          </Button>
+        </header>
+      </div>
     </div>
   );
 }

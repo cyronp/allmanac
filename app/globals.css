@@ -128,3 +128,45 @@
     @apply font-sans;
   }
 }
+
+/* ── Cycling text animations ───────────────────────────────── */
+@keyframes cycling-blur-up-out {
+  from {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes cycling-blur-up-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+.cycling-word--exit {
+  animation: 220ms ease-in both cycling-blur-up-out;
+}
+
+.cycling-word--enter {
+  animation: 300ms ease-out both cycling-blur-up-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycling-word--exit,
+  .cycling-word--enter {
+    animation: none;
+  }
+}
