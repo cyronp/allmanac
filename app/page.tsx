@@ -28,7 +28,7 @@ export default function Home() {
           </Heading>
           <Text
             as="p"
-            className="inline-flex gap-1 w-full text-center items-center justify-center text-muted-foreground font-medium text-sm sm:text-base "
+            className="inline-flex gap-1 w-full items-center justify-center text-muted-foreground font-medium text-lg"
           >
             Start your journey now and organized your
             <CyclingText
@@ -37,12 +37,12 @@ export default function Home() {
             />
           </Text>
           <Separator />
-          <Button className="w-full h-11 sm:h-12" variant="secondary" asChild>
+          <Button className="w-full h-11 sm:h-12 rounded-full" variant="outline" asChild>
             <Link href="/dashboard">
               <GoogleIcon /> Login with Google
             </Link>
           </Button>
-          <Button className="w-full h-11 sm:h-12" variant="secondary" asChild>
+          <Button className="w-full h-11 sm:h-12 rounded-full" variant="outline" asChild>
             <Link href="/dashboard">
               <GithubIcon /> Login with Github
             </Link>
