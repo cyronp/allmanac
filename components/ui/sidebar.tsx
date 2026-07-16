@@ -22,7 +22,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ChevronsRightIcon } from "lucide-react";
+import { PanelLeftIcon } from "lucide-react";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -33,7 +33,6 @@ const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
-  open: boolean;
   setOpen: (open: boolean) => void;
   openMobile: boolean;
   setOpenMobile: (open: boolean) => void;
@@ -256,7 +255,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar, open } = useSidebar();
+  const { toggleSidebar } = useSidebar();
 
   return (
     <Button
@@ -271,11 +270,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <ChevronsRightIcon
-        className={cn(
-          "transition-transform duration-200",
-          open && "rotate-180",
-        )}
+      <PanelLeftIcon
       />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
