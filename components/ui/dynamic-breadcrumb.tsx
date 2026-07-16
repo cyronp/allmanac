@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SlashIcon } from "lucide-react";
+import { Home, SlashIcon } from "lucide-react";
 
 interface DynamicBreadcrumbProps {
   className?: string;
@@ -45,16 +45,23 @@ export function DynamicBreadcrumb({ className }: DynamicBreadcrumbProps) {
           const path = `/${segments.slice(0, index + 1).join("/")}`;
           const isLast = index === segments.length - 1;
           const formattedName = formatSegment(segment);
+          const showHomeIcon = index === 0;
 
           return (
             <React.Fragment key={path}>
               {index > 0 && <BreadcrumbSeparator><SlashIcon strokeWidth={3}/></BreadcrumbSeparator>}
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage>{formattedName}</BreadcrumbPage>
+                  <BreadcrumbPage className="flex items-center gap-1">
+                    {showHomeIcon && <Home className="h-4 w-4" />}
+                    {formattedName}
+                  </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link href={path}>{formattedName}</Link>
+                    <Link href={path} className="flex items-center gap-1">
+                      {showHomeIcon && <Home className="h-4 w-4" />}
+                      {formattedName}
+                    </Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
