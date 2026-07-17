@@ -34,7 +34,6 @@ export default function Timeline({ children, events }: TimelineProps) {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   React.useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDate(new Date());
   }, []);
 

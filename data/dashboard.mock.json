@@ -1,32 +1,168 @@
 {
   "user": {
-    "name": "Cyronp"
+    "name": "Cyronp",
+    "description": "Dashboard owner."
   },
   "todayPendencies": [
-    { "id": "morning-run", "title": "Morning run", "startTime": "07:00", "endTime": "07:40", "url": "#" },
-    { "id": "pay-electricity", "title": "Pay electricity bill", "startTime": "12:15", "endTime": "12:30", "url": "#" },
-    { "id": "buy-groceries", "title": "Buy groceries", "startTime": "18:30", "endTime": "19:15", "url": "#" },
-    { "id": "call-mom", "title": "Call mom", "startTime": "20:30", "endTime": "21:00", "url": "#" }
+    {
+      "id": "morning-run",
+      "title": "Morning run",
+      "startTime": "07:00",
+      "endTime": "07:40",
+      "url": "#",
+      "description": "A short run to start the day with energy."
+    },
+    {
+      "id": "pay-electricity",
+      "title": "Pay electricity bill",
+      "startTime": "12:15",
+      "endTime": "12:30",
+      "url": "#",
+      "description": "Pay this month's electricity bill before the due date."
+    },
+    {
+      "id": "buy-groceries",
+      "title": "Buy groceries",
+      "startTime": "18:30",
+      "endTime": "19:15",
+      "url": "#",
+      "description": "Pick up groceries needed for the week."
+    },
+    {
+      "id": "call-mom",
+      "title": "Call mom",
+      "startTime": "20:30",
+      "endTime": "21:00",
+      "url": "#",
+      "description": "Catch up with Mom after dinner."
+    }
   ],
   "upcomingPendencies": [
-    { "id": "team-retro", "title": "Team retrospective", "date": "Tomorrow", "startTime": "15:00", "endTime": "16:00", "url": "#" },
-    { "id": "dentist", "title": "Dentist appointment", "date": "Wednesday", "startTime": "10:30", "endTime": "11:30" },
-    { "id": "laundry", "title": "Do laundry", "date": "Saturday", "startTime": "09:00", "endTime": "10:30" },
-    { "id": "book-club", "title": "Book club", "date": "Sunday", "startTime": "16:00", "endTime": "17:30" }
+    {
+      "id": "team-retro",
+      "title": "Team retrospective",
+      "date": "Tomorrow",
+      "startTime": "15:00",
+      "endTime": "16:00",
+      "url": "#",
+      "description": "Review the team's recent work and identify improvements."
+    },
+    {
+      "id": "dentist",
+      "title": "Dentist appointment",
+      "date": "Wednesday",
+      "startTime": "10:30",
+      "endTime": "11:30",
+      "description": "Routine dental checkup and cleaning."
+    },
+    {
+      "id": "laundry",
+      "title": "Do laundry",
+      "date": "Saturday",
+      "startTime": "09:00",
+      "endTime": "10:30",
+      "description": "Wash, dry, and fold this week's clothes."
+    },
+    {
+      "id": "book-club",
+      "title": "Book club",
+      "date": "Sunday",
+      "startTime": "16:00",
+      "endTime": "17:30",
+      "description": "Discuss this month's selected book with the group."
+    }
   ],
   "timelineEvents": [
-    { "id": "sleep-early", "title": "Sleep", "start": "00:00", "end": "07:00" },
-    { "id": "morning-run", "title": "Morning run", "start": "07:00", "end": "07:40" },
-    { "id": "breakfast", "title": "Breakfast and commute", "start": "07:40", "end": "09:00" },
-    { "id": "work", "title": "Software developer job", "start": "09:00", "end": "12:00" },
-    { "id": "lunch", "title": "Lunch", "start": "12:00", "end": "13:00" },
-    { "id": "work-afternoon", "title": "Software developer job", "start": "13:00", "end": "18:00" },
-    { "id": "groceries", "title": "Buy groceries", "start": "18:30", "end": "19:15" },
-    { "id": "cooking", "title": "Cook dinner", "start": "19:15", "end": "20:00" },
-    { "id": "guitar", "title": "Practice guitar", "start": "20:00", "end": "20:30" },
-    { "id": "call-mom", "title": "Call mom", "start": "20:30", "end": "21:00" },
-    { "id": "reading", "title": "Read a novel", "start": "21:00", "end": "22:30" },
-    { "id": "bedtime", "title": "Wind down for bed", "start": "22:30", "end": "23:00" },
-    { "id": "sleep-late", "title": "Sleep", "start": "23:00", "end": "24:00" }
+    {
+      "id": "sleep-early",
+      "title": "Sleep",
+      "start": "00:00",
+      "end": "07:00",
+      "description": "Overnight rest before the morning routine."
+    },
+    {
+      "id": "morning-run",
+      "title": "Morning run",
+      "start": "07:00",
+      "end": "07:40",
+      "description": "A short run to start the day with energy."
+    },
+    {
+      "id": "breakfast",
+      "title": "Breakfast and commute",
+      "start": "07:40",
+      "end": "09:00",
+      "description": "Eat breakfast and travel to work."
+    },
+    {
+      "id": "work",
+      "title": "Software developer job",
+      "start": "09:00",
+      "end": "12:00",
+      "description": "Focus on software development tasks for the morning."
+    },
+    {
+      "id": "lunch",
+      "title": "Lunch",
+      "start": "12:00",
+      "end": "13:00",
+      "description": "Take a midday break for lunch."
+    },
+    {
+      "id": "work-afternoon",
+      "title": "Software developer job",
+      "start": "13:00",
+      "end": "18:00",
+      "description": "Continue software development work in the afternoon."
+    },
+    {
+      "id": "groceries",
+      "title": "Buy groceries",
+      "start": "18:30",
+      "end": "19:15",
+      "description": "Pick up groceries needed for the week."
+    },
+    {
+      "id": "cooking",
+      "title": "Cook dinner",
+      "start": "19:15",
+      "end": "20:00",
+      "description": "Prepare dinner using the groceries from the store."
+    },
+    {
+      "id": "guitar",
+      "title": "Practice guitar",
+      "start": "20:00",
+      "end": "20:30",
+      "description": "Practice guitar technique and a few songs."
+    },
+    {
+      "id": "call-mom",
+      "title": "Call mom",
+      "start": "20:30",
+      "end": "21:00",
+      "description": "Catch up with Mom after dinner."
+    },
+    {
+      "id": "reading",
+      "title": "Read a novel",
+      "start": "21:00",
+      "end": "22:30",
+      "description": "Spend quiet time reading a novel."
+    },
+    {
+      "id": "bedtime",
+      "title": "Wind down for bed",
+      "start": "22:30",
+      "end": "23:00",
+      "description": "Follow a relaxing routine before going to sleep."
+    },
+    {
+      "id": "sleep-late",
+      "title": "Sleep",
+      "start": "23:00",
+      "end": "24:00",
+      "description": "Finish the day with a full night's rest."
+    }
   ]
 }

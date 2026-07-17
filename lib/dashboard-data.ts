@@ -14,6 +14,7 @@ export interface TimelineEventData {
   title: string;
   start: string;
   end: string;
+  description: string;
 }
 
 export interface DashboardData {

@@ -1,4 +1,7 @@
+"use client";
+
 import { Heading } from "@/components/ui/heading";
+import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -14,6 +17,34 @@ export default function PendencyContainer({
   href,
   children,
 }: PendencyContainerProps) {
+  const [isDragging, setIsDragging] = React.useState(false);
+  const isDraggingRef = React.useRef(false);
+  const dragState = React.useRef({ startY: 0, scrollTop: 0 });
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    dragState.current = {
+      startY: e.clientY,
+      scrollTop: e.currentTarget.scrollTop,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+
+    e.preventDefault();
+    e.currentTarget.scrollTop =
+      dragState.current.scrollTop - (e.clientY - dragState.current.startY);
+  };
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false;
+    setIsDragging(false);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <Heading
@@ -27,7 +58,16 @@ export default function PendencyContainer({
         </Link>
       </Heading>
       <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl border border-white/5">
-        <div className="flex flex-col p-4 gap-2 max-h-75 overflow-y-auto scrollbar-none">
+        <div
+          className={cn(
+            "flex max-h-75 flex-col gap-2 overflow-y-auto p-4 select-none scrollbar-none",
+            isDragging ? "cursor-grabbing" : "cursor-grab",
+          )}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
           {children}
         </div>
       </div>
