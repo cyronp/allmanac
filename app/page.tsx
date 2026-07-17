@@ -8,7 +8,7 @@ import GoogleIcon from "@/components/icons/google-icon";
 import GithubIcon from "@/components/icons/github-icon";
 
 export default function Home() {
-  let words = ["tasks", "goals", "hobbies"];
+  const words = ["tasks", "goals", "hobbies"];
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden bg-background px-4">
       <div className="flex flex-col justify-center items-center bg-card w-full min-w-70 max-w-105 sm:max-w-120 px-5 sm:px-6 py-8 rounded-lg">

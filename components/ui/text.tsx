@@ -42,7 +42,7 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
     return (
       <Comp
         className={cn(textVariants({ align, weight, className }))}
-        ref={ref as any}
+        ref={ref as React.Ref<never>}
         {...props}
       />
     );

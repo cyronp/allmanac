@@ -44,7 +44,7 @@ export function CyclingText({
       clearInterval(intervalId);
       clearTimers();
     };
-  }, []);
+  }, [interval, words.length]);
 
   return (
     <span

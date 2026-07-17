@@ -17,7 +17,7 @@ export default function NotFound() {
           404
         </Text>
         <Heading as="h1" className="text-xl text-primary tracking-tighter">
-          Opss looks like we couldn't find this page...
+          Opss looks like we {"couldn't"} find this page...
         </Heading>
       </div>
       <Button asChild variant="outline" size="lg">

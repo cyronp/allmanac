@@ -1,6 +1,6 @@
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 interface PendencyCardProps {

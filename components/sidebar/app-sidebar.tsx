@@ -2,7 +2,7 @@
 
 import {
   CalendarIcon,
-  LayoutGrid,
+  HouseIcon,
   SquareDashed,
   TrophyIcon,
 } from "lucide-react";
@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const navItems = [
-  { title: "Dashboard", icon: LayoutGrid, href: "/dashboard" },
+  { title: "Dashboard", icon: HouseIcon, href: "/dashboard" },
   { title: "Calendar", icon: CalendarIcon, href: "/dashboard/calendar" },
   { title: "Your Goals", icon: TrophyIcon, href: "/dashboard/goals" },
 ];

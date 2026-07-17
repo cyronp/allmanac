@@ -2,6 +2,8 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import PendencyCard from "@/components/dashboard/pendency-section/pendency-card";
 import PendencyContainer from "@/components/dashboard/pendency-section/pendency-container";
+import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
+import Timeline from "@/components/dashboard/timeline-section/timeline";
 
 interface AppPageProps {
   username: string;
@@ -11,9 +13,9 @@ export default function AppPage({ username }: AppPageProps) {
   username = "Cyronp";
 
   return (
-    <div className="relative w-full h-full z-0 overflow-hidden">
+    <div className="relative w-full h-full z-0 overflow-y-auto pr-1">
       {/* Content wrapper - guaranteed to sit on top of background glows */}
-      <div className="relative z-10 flex flex-col w-full h-full gap-4">
+      <div className="relative z-10 flex flex-col w-full gap-4 pb-4">
         {/* Heading */}
         <div className="flex flex-col mb-4">
           <Heading as="h1" className="text-4xl tracking-tight">
@@ -23,7 +25,7 @@ export default function AppPage({ username }: AppPageProps) {
             as="span"
             className="text-lg text-muted-foreground tracking-tighter"
           >
-            Let's have a better life cycle together!
+            {"Let's"} have a better life cycle together!
           </Text>
         </div>
         {/* Today/Upcoming pendencies grid */}
@@ -76,6 +78,9 @@ export default function AppPage({ username }: AppPageProps) {
             />
           </PendencyContainer>
         </div>
+        <TimelineContainer>
+          <Timeline/>
+        </TimelineContainer>
       </div>
     </div>
   );

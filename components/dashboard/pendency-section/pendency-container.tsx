@@ -1,5 +1,5 @@
 import { Heading } from "@/components/ui/heading";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -26,12 +26,10 @@ export default function PendencyContainer({
           <ArrowUpRight className="group-hover:-translate-y-1 group-hover:translate-x-1 duration-200 transition-all" />
         </Link>
       </Heading>
-      <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl">
+      <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl border border-white/5">
         <div className="flex flex-col p-4 gap-2 max-h-75 overflow-y-auto scrollbar-none">
           {children}
         </div>
-
-        <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/5" />
       </div>
     </div>
   );
