@@ -2,6 +2,7 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import PendencyCard from "@/components/dashboard/pendency-section/pendency-card";
 import PendencyContainer from "@/components/dashboard/pendency-section/pendency-container";
+import TimelineBlock from "@/components/dashboard/timeline-section/timeline-card";
 import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
 import Timeline from "@/components/dashboard/timeline-section/timeline";
 
@@ -56,7 +57,10 @@ export default function AppPage({ username }: AppPageProps) {
           </PendencyContainer>
 
           {/* Right Column: Upcoming Pendencies */}
-          <PendencyContainer title="Upcoming pendencies" href="dashboard/calendar">
+          <PendencyContainer
+            title="Upcoming pendencies"
+            href="dashboard/calendar"
+          >
             <PendencyCard
               title="Design Review"
               date="Tomorrow"
@@ -79,7 +83,15 @@ export default function AppPage({ username }: AppPageProps) {
           </PendencyContainer>
         </div>
         <TimelineContainer>
-          <Timeline/>
+          <Timeline>
+            <TimelineBlock start="09:00" end="10:30" title="Team Standup" />
+            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
+            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
+            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
+            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
+            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
+            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
+          </Timeline>
         </TimelineContainer>
       </div>
     </div>

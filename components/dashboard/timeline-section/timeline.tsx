@@ -11,6 +11,7 @@ import { Text } from "@/components/ui/text";
 import { ChevronDownIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
+import { HOUR_WIDTH } from "./timeline-card";
 
 const hours = Array.from({ length: 24 }, (_, i) => {
   const ampm = i >= 12 ? "PM" : "AM";
@@ -18,10 +19,18 @@ const hours = Array.from({ length: 24 }, (_, i) => {
   return `${hour}${ampm}`;
 });
 
-export default function Timeline() {
+interface TimelineProps {
+  children?: React.ReactNode;
+}
+
+export default function Timeline({ children }: TimelineProps) {
   const [date, setDate] = useState<Date>();
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const isDraggingRef = React.useRef(false);
+  const dragState = React.useRef({ startX: 0, scrollLeft: 0 });
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   React.useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -33,9 +42,9 @@ export default function Timeline() {
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      if (e.shiftKey) {
         e.preventDefault();
-        container.scrollLeft += e.deltaY;
+        container.scrollLeft += e.deltaY || e.deltaX;
       }
     };
 
@@ -44,6 +53,55 @@ export default function Timeline() {
       container.removeEventListener("wheel", handleWheel);
     };
   }, []);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  React.useEffect(() => {
+    const container = scrollRef.current;
+    if (!container || !date) return;
+    const isSelectedToday = differenceInCalendarDays(date, new Date()) === 0;
+    if (isSelectedToday) {
+      const now = new Date();
+      const pos = (now.getHours() + now.getMinutes() / 60) * HOUR_WIDTH;
+      container.scrollLeft = Math.max(0, pos - container.clientWidth / 2);
+    }
+  }, [date]);
+
+  const isToday = date
+    ? differenceInCalendarDays(date, new Date()) === 0
+    : false;
+  const currentTimePos =
+    (currentTime.getHours() + currentTime.getMinutes() / 60) * HOUR_WIDTH;
+  const trackWidth = 24 * HOUR_WIDTH;
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    dragState.current = {
+      startX: e.clientX,
+      scrollLeft: e.currentTarget.scrollLeft,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+
+    e.preventDefault();
+    e.currentTarget.scrollLeft =
+      dragState.current.scrollLeft - (e.clientX - dragState.current.startX);
+  };
+
+  const handleMouseUp = () => {
+    isDraggingRef.current = false;
+    setIsDragging(false);
+  };
 
   const handlePrevDay = () => {
     const current = date || new Date();
@@ -114,7 +172,7 @@ export default function Timeline() {
               />
             </PopoverContent>
           </Popover>
-          {/* DateScroller */}
+
           <div className="inline-flex items-center justify-center">
             <Button size="icon" variant="ghost" onClick={handlePrevDay}>
               <ChevronLeft />
@@ -135,20 +193,69 @@ export default function Timeline() {
       <div className="relative w-full min-w-0">
         <div
           ref={scrollRef}
-          className="flex flex-row gap-10 overflow-x-auto w-full scrollbar-none mask-fade-x"
+          className={cn(
+            "max-h-60 w-full overflow-auto scrollbar-none",
+            isDragging ? "cursor-grabbing" : "cursor-grab",
+          )}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
         >
-          {hours.map((hourText) => (
-            <Text
-              key={hourText}
-              as="span"
-              className="shrink-0 text-muted-foreground select-none text-sm font-medium"
-            >
-              {hourText}
-            </Text>
-          ))}
+          <div style={{ width: `${trackWidth}px` }}>
+            <div className="sticky top-0 z-20 flex h-7 flex-row select-none">
+              {hours.map((hourText) => (
+                <div
+                  key={hourText}
+                  className="shrink-0 px-1"
+                  style={{ width: `${HOUR_WIDTH}px` }}
+                >
+                  <Text
+                    as="span"
+                    className="text-muted-foreground select-none text-xs font-medium"
+                  >
+                    {hourText}
+                  </Text>
+                </div>
+              ))}
+            </div>
+
+            <div className="relative min-h-12 border-x border-b border-border/15 bg-muted/20 select-none">
+              <div className="absolute inset-0 pointer-events-none z-0">
+                {Array.from({ length: 25 }, (_, i) => (
+                  <div
+                    key={`h-${i}`}
+                    className="absolute top-0 bottom-0 w-px bg-border/25"
+                    style={{ left: `${i * HOUR_WIDTH}px` }}
+                  />
+                ))}
+                {Array.from({ length: 24 }, (_, i) => (
+                  <div
+                    key={`hh-${i}`}
+                    className="absolute top-0 bottom-0 w-px bg-border/10"
+                    style={{ left: `${(i + 0.5) * HOUR_WIDTH}px` }}
+                  />
+                ))}
+
+                {isToday && (
+                  <div
+                    className="absolute top-0 bottom-0 z-10"
+                    style={{ left: `${currentTimePos}px` }}
+                    suppressHydrationWarning
+                  >
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-primary" />
+                    <div className="w-0.5 h-full bg-primary mx-auto" />
+                  </div>
+                )}
+              </div>
+
+              {React.Children.map(children, (child) => (
+                <div className="relative z-1 h-12">{child}</div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
