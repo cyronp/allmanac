@@ -2,16 +2,16 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import PendencyCard from "@/components/dashboard/pendency-section/pendency-card";
 import PendencyContainer from "@/components/dashboard/pendency-section/pendency-container";
-import TimelineBlock from "@/components/dashboard/timeline-section/timeline-card";
 import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
 import Timeline from "@/components/dashboard/timeline-section/timeline";
+import { dashboardMockData } from "@/lib/dashboard-data";
 
 interface AppPageProps {
   username: string;
 }
 
 export default function AppPage({ username }: AppPageProps) {
-  username = "Cyronp";
+  username = dashboardMockData.user.name;
 
   return (
     <div className="relative w-full h-full z-0 overflow-y-auto pr-1 min-w-0">
@@ -36,24 +36,9 @@ export default function AppPage({ username }: AppPageProps) {
             title="Today's pendencies"
             href="dashboard/calendar"
           >
-            <PendencyCard
-              title="Hobby 1"
-              startTime="07:00"
-              endTime="08:00"
-              url="#"
-            />
-            <PendencyCard
-              title="Hobby 2"
-              startTime="09:30"
-              endTime="10:30"
-              url="#"
-            />
-            <PendencyCard
-              title="Hobby 3"
-              startTime="14:00"
-              endTime="15:30"
-              url="#"
-            />
+            {dashboardMockData.todayPendencies.map(({ id, ...pendency }) => (
+              <PendencyCard key={id} {...pendency} />
+            ))}
           </PendencyContainer>
 
           {/* Right Column: Upcoming Pendencies */}
@@ -61,37 +46,13 @@ export default function AppPage({ username }: AppPageProps) {
             title="Upcoming pendencies"
             href="dashboard/calendar"
           >
-            <PendencyCard
-              title="Design Review"
-              date="Tomorrow"
-              startTime="10:00"
-              endTime="11:30"
-              url="#"
-            />
-            <PendencyCard
-              title="Dentist Appointment"
-              date="Wednesday"
-              startTime="14:00"
-              endTime="15:00"
-            />
-            <PendencyCard
-              title="Gym Session"
-              date="Thursday"
-              startTime="18:00"
-              endTime="19:30"
-            />
+            {dashboardMockData.upcomingPendencies.map(({ id, ...pendency }) => (
+              <PendencyCard key={id} {...pendency} />
+            ))}
           </PendencyContainer>
         </div>
         <TimelineContainer>
-          <Timeline>
-            <TimelineBlock start="09:00" end="10:30" title="Team Standup" />
-            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
-            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
-            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
-            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
-            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
-            <TimelineBlock start="14:00" end="15:30" title="Gym Session" />
-          </Timeline>
+          <Timeline events={dashboardMockData.timelineEvents} />
         </TimelineContainer>
       </div>
     </div>

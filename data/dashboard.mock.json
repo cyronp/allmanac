@@ -1,0 +1,32 @@
+{
+  "user": {
+    "name": "Cyronp"
+  },
+  "todayPendencies": [
+    { "id": "morning-run", "title": "Morning run", "startTime": "07:00", "endTime": "07:40", "url": "#" },
+    { "id": "pay-electricity", "title": "Pay electricity bill", "startTime": "12:15", "endTime": "12:30", "url": "#" },
+    { "id": "buy-groceries", "title": "Buy groceries", "startTime": "18:30", "endTime": "19:15", "url": "#" },
+    { "id": "call-mom", "title": "Call mom", "startTime": "20:30", "endTime": "21:00", "url": "#" }
+  ],
+  "upcomingPendencies": [
+    { "id": "team-retro", "title": "Team retrospective", "date": "Tomorrow", "startTime": "15:00", "endTime": "16:00", "url": "#" },
+    { "id": "dentist", "title": "Dentist appointment", "date": "Wednesday", "startTime": "10:30", "endTime": "11:30" },
+    { "id": "laundry", "title": "Do laundry", "date": "Saturday", "startTime": "09:00", "endTime": "10:30" },
+    { "id": "book-club", "title": "Book club", "date": "Sunday", "startTime": "16:00", "endTime": "17:30" }
+  ],
+  "timelineEvents": [
+    { "id": "sleep-early", "title": "Sleep", "start": "00:00", "end": "07:00" },
+    { "id": "morning-run", "title": "Morning run", "start": "07:00", "end": "07:40" },
+    { "id": "breakfast", "title": "Breakfast and commute", "start": "07:40", "end": "09:00" },
+    { "id": "work", "title": "Software developer job", "start": "09:00", "end": "12:00" },
+    { "id": "lunch", "title": "Lunch", "start": "12:00", "end": "13:00" },
+    { "id": "work-afternoon", "title": "Software developer job", "start": "13:00", "end": "18:00" },
+    { "id": "groceries", "title": "Buy groceries", "start": "18:30", "end": "19:15" },
+    { "id": "cooking", "title": "Cook dinner", "start": "19:15", "end": "20:00" },
+    { "id": "guitar", "title": "Practice guitar", "start": "20:00", "end": "20:30" },
+    { "id": "call-mom", "title": "Call mom", "start": "20:30", "end": "21:00" },
+    { "id": "reading", "title": "Read a novel", "start": "21:00", "end": "22:30" },
+    { "id": "bedtime", "title": "Wind down for bed", "start": "22:30", "end": "23:00" },
+    { "id": "sleep-late", "title": "Sleep", "start": "23:00", "end": "24:00" }
+  ]
+}

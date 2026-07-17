@@ -11,7 +11,7 @@ import { Text } from "@/components/ui/text";
 import { ChevronDownIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { HOUR_WIDTH } from "./timeline-card";
+import TimelineCard, { HOUR_WIDTH, type TimelineBlockProps } from "./timeline-card";
 
 const hours = Array.from({ length: 24 }, (_, i) => {
   const ampm = i >= 12 ? "PM" : "AM";
@@ -21,9 +21,10 @@ const hours = Array.from({ length: 24 }, (_, i) => {
 
 interface TimelineProps {
   children?: React.ReactNode;
+  events?: Array<TimelineBlockProps & { id: string }>;
 }
 
-export default function Timeline({ children }: TimelineProps) {
+export default function Timeline({ children, events }: TimelineProps) {
   const [date, setDate] = useState<Date>();
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -249,9 +250,15 @@ export default function Timeline({ children }: TimelineProps) {
                 )}
               </div>
 
-              {React.Children.map(children, (child) => (
-                <div className="relative z-1 h-12">{child}</div>
-              ))}
+              {events
+                ? events.map(({ id, ...event }) => (
+                    <div key={id} className="relative z-1 h-12">
+                      <TimelineCard {...event} />
+                    </div>
+                  ))
+                : React.Children.map(children, (child) => (
+                    <div className="relative z-1 h-12">{child}</div>
+                  ))}
             </div>
           </div>
         </div>
