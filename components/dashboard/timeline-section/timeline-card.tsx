@@ -124,7 +124,7 @@ export default function TimelineCard({
             Toggle Edit
             <EditIcon />
           </Button>
-          <Button>Save & close</Button>
+          <Button>Save & Close</Button>
         </div>
       </DialogContent>
     </Dialog>

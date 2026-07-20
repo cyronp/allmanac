@@ -237,27 +237,24 @@ export default function Timeline({ children, events }: TimelineProps) {
                   />
                 ))}
 
-                {isToday && (
-                  <div
-                    className="absolute top-0 bottom-0 z-10"
-                    style={{ left: `${currentTimePos}px` }}
-                    suppressHydrationWarning
-                  >
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-primary" />
-                    <div className="w-0.5 h-full bg-primary mx-auto" />
-                  </div>
-                )}
               </div>
+
+              {isToday && (
+                <div
+                  className="pointer-events-none absolute top-0 bottom-0 z-10"
+                  style={{ left: `${currentTimePos}px` }}
+                  suppressHydrationWarning
+                >
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-primary" />
+                  <div className="w-0.5 h-full bg-primary mx-auto" />
+                </div>
+              )}
 
               {events
                 ? events.map(({ id, ...event }) => (
-                    <div key={id} className="relative z-1 h-12">
-                      <TimelineCard {...event} />
-                    </div>
+                    <TimelineCard key={id} {...event} />
                   ))
-                : React.Children.map(children, (child) => (
-                    <div className="relative z-1 h-12">{child}</div>
-                  ))}
+                : children}
             </div>
           </div>
         </div>

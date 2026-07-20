@@ -164,5 +164,25 @@
       "end": "24:00",
       "description": "Finish the day with a full night's rest."
     }
+  ],
+  "goals": [
+    {
+      "title": "Run a half marathon",
+      "description": "Build endurance with a consistent training plan.",
+      "startingDate": "01/08/2026",
+      "endingDate": "30/11/2026"
+    },
+    {
+      "title": "Complete a portfolio project",
+      "description": "Design, build, and publish a polished web application.",
+      "startingDate": "15/07/2026",
+      "endingDate": "15/09/2026"
+    },
+    {
+      "title": "Read twelve books",
+      "description": "Finish one book each month across a range of genres.",
+      "startingDate": "01/01/2026",
+      "endingDate": "31/12/2026"
+    }
   ]
 }
