@@ -17,11 +17,22 @@ export interface TimelineEventData {
   description: string;
 }
 
+export interface GoalsData {
+  id: number;
+  title: string;
+  description: string;
+  startingDate: string;
+  endingDate: string;
+  choosen_color: string;
+  choosen_emoji: string;
+}
+
 export interface DashboardData {
   user: { name: string };
   todayPendencies: PendencyData[];
   upcomingPendencies: PendencyData[];
   timelineEvents: TimelineEventData[];
+  goals: GoalsData[];
 }
 
 export const dashboardMockData: DashboardData = dashboardMockDataJson;

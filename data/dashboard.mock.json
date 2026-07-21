@@ -167,22 +167,40 @@
   ],
   "goals": [
     {
+      "id": 1,
       "title": "Run a half marathon",
       "description": "Build endurance with a consistent training plan.",
       "startingDate": "01/08/2026",
-      "endingDate": "30/11/2026"
+      "endingDate": "30/11/2026",
+      "choosen_color": "#22C55E",
+      "choosen_emoji": "🏃"
     },
     {
+      "id": 2,
       "title": "Complete a portfolio project",
       "description": "Design, build, and publish a polished web application.",
       "startingDate": "15/07/2026",
-      "endingDate": "15/09/2026"
+      "endingDate": "15/09/2026",
+      "choosen_color": "#3B82F6",
+      "choosen_emoji": "💻"
     },
     {
+      "id": 3,
       "title": "Read twelve books",
       "description": "Finish one book each month across a range of genres.",
       "startingDate": "01/01/2026",
-      "endingDate": "31/12/2026"
+      "endingDate": "31/12/2026",
+      "choosen_color": "#A855F7",
+      "choosen_emoji": "📚"
+    },
+    {
+      "id": 4,
+      "title": "Read twelve books",
+      "description": "Finish one book each month across a range of genres.",
+      "startingDate": "01/01/2026",
+      "endingDate": "31/12/2026",
+      "choosen_color": "#A8554d",
+      "choosen_emoji": "📚"
     }
   ]
 }

@@ -4,7 +4,9 @@ import PendencyCard from "@/components/dashboard/pendency-section/pendency-card"
 import PendencyContainer from "@/components/dashboard/pendency-section/pendency-container";
 import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
 import Timeline from "@/components/dashboard/timeline-section/timeline";
-import { dashboardMockData } from "@/lib/dashboard-data";
+import { dashboardMockData } from "@/app/types/dashboard-data";
+import GoalsContainer from "@/components/dashboard/goals-section/goals-container";
+import GoalsCard from "@/components/dashboard/goals-section/goals-card";
 
 interface AppPageProps {
   username: string;
@@ -18,7 +20,7 @@ export default function AppPage({ username }: AppPageProps) {
       {/* Content wrapper - guaranteed to sit on top of background glows */}
       <div className="relative z-10 flex flex-col w-full gap-4 pb-4 min-w-0">
         {/* Heading */}
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col">
           <Heading as="h1" className="text-4xl tracking-tight">
             Good to see you {username}!
           </Heading>
@@ -54,6 +56,13 @@ export default function AppPage({ username }: AppPageProps) {
         <TimelineContainer>
           <Timeline events={dashboardMockData.timelineEvents} />
         </TimelineContainer>
+
+        <GoalsContainer>
+          {dashboardMockData.goals.map(({id, ...goals}) => (
+            <GoalsCard key={id} {...goals}/>
+          ))}
+        </GoalsContainer>
+
       </div>
     </div>
   );

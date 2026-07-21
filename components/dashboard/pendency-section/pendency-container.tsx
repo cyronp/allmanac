@@ -60,7 +60,7 @@ export default function PendencyContainer({
       <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl border border-white/5">
         <div
           className={cn(
-            "flex max-h-75 flex-col gap-2 overflow-y-auto p-4 select-none scrollbar-none",
+            "flex max-h-56 flex-col gap-2 overflow-y-auto p-4 select-none scrollbar-none",
             isDragging ? "cursor-grabbing" : "cursor-grab",
           )}
           onMouseDown={handleMouseDown}

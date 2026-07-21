@@ -49,7 +49,7 @@ export function CyclingText({
   return (
     <span
       className={[
-        `inline-flex ${className}`,
+        `inline-flex cycling-word--background ${className}`,
         animating === "exit" ? "cycling-word--exit" : "",
         animating === "enter" ? "cycling-word--enter" : "",
       ]
