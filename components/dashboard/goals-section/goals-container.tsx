@@ -12,7 +12,7 @@ export default function GoalsContainer({ children }: GoalsContainerProps) {
         Your Goals
       </Heading>
       <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl border border-white/5">
-        <div className="flex flex-row p-4 gap-2">
+        <div className="flex flex-col lg:flex-row p-4 gap-2">
           {children}
         </div>
       </div>

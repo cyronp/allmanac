@@ -4,7 +4,7 @@ import { DynamicBreadcrumb } from "../ui/dynamic-breadcrumb";
 
 export default function AppHeader() {
   return (
-    <header className="sticky top-0 z-10 flex h-14 items-center px-4 w-full">
+    <header className="sticky top-0 z-10 flex h-14 w-full shrink-0 items-center px-4">
       <div className="flex flex-1 items-center justify-between">
         <DynamicBreadcrumb />
 
