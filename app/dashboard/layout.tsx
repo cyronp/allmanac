@@ -1,4 +1,5 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import AppSidebar from "@/components/sidebar/app-sidebar";
 import AppHeader from "@/components/header/app-header";
 
@@ -8,14 +9,17 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="h-svh min-h-0 overflow-hidden">
       <AppSidebar />
-      <SidebarInset className="bg-sidebar min-w-0 overflow-hidden">
+      <SidebarInset className="min-h-0 min-w-0 overflow-hidden bg-sidebar">
         <AppHeader />
-        <main className="flex flex-1 flex-col pr-4 pb-4 min-w-0 overflow-hidden">
-          <div className="flex-1 rounded-xl border border-sidebar-border bg-background p-6 shadow-xs min-w-0 overflow-hidden">
-            {children}
-          </div>
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden pr-4 pb-4">
+          <ScrollArea
+            type="always"
+            className="min-h-0 min-w-0 flex-1 rounded-xl border border-sidebar-border bg-background shadow-xs"
+          >
+            <div className="p-6">{children}</div>
+          </ScrollArea>
         </main>
       </SidebarInset>
     </SidebarProvider>
