@@ -18,7 +18,7 @@ export default function AppPage({ username }: AppPageProps) {
   return (
     <div className="relative z-0 min-w-0 w-full pr-1">
       {/* Content wrapper - guaranteed to sit on top of background glows */}
-      <div className="relative z-10 flex flex-col w-full gap-4 pb-4 min-w-0">
+      <div className="relative z-10 flex flex-col w-full gap-4 min-w-0">
         {/* Heading */}
         <div className="flex flex-col">
           <Heading as="h1" className="text-4xl tracking-tight">

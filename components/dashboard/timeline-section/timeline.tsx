@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Text } from "@/components/ui/text";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronDownIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -25,17 +26,10 @@ interface TimelineProps {
 }
 
 export default function Timeline({ children, events }: TimelineProps) {
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | undefined>(() => new Date());
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = React.useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const isDraggingRef = React.useRef(false);
-  const dragState = React.useRef({ startX: 0, scrollLeft: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
-
-  React.useEffect(() => {
-    setDate(new Date());
-  }, []);
 
   React.useEffect(() => {
     const container = scrollRef.current;
@@ -78,30 +72,6 @@ export default function Timeline({ children, events }: TimelineProps) {
   const currentTimePos =
     (currentTime.getHours() + currentTime.getMinutes() / 60) * HOUR_WIDTH;
   const trackWidth = 24 * HOUR_WIDTH;
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.button !== 0) return;
-
-    isDraggingRef.current = true;
-    setIsDragging(true);
-    dragState.current = {
-      startX: e.clientX,
-      scrollLeft: e.currentTarget.scrollLeft,
-    };
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) return;
-
-    e.preventDefault();
-    e.currentTarget.scrollLeft =
-      dragState.current.scrollLeft - (e.clientX - dragState.current.startX);
-  };
-
-  const handleMouseUp = () => {
-    isDraggingRef.current = false;
-    setIsDragging(false);
-  };
 
   const handlePrevDay = () => {
     const current = date || new Date();
@@ -191,16 +161,11 @@ export default function Timeline({ children, events }: TimelineProps) {
         </div>
       </div>
       <div className="relative w-full min-w-0">
-        <div
-          ref={scrollRef}
-          className={cn(
-            "max-h-60 w-full overflow-auto scrollbar-none",
-            isDragging ? "cursor-grabbing" : "cursor-grab",
-          )}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
+        <ScrollArea
+          viewportRef={scrollRef}
+          scrollbarOrientation="horizontal"
+          type="always"
+          className="h-24 w-full"
         >
           <div style={{ width: `${trackWidth}px` }}>
             <div className="sticky top-0 z-20 flex h-7 flex-row select-none">
@@ -257,7 +222,7 @@ export default function Timeline({ children, events }: TimelineProps) {
                 : children}
             </div>
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );
