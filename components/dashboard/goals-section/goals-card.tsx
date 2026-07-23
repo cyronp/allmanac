@@ -1,3 +1,5 @@
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import GoalDetailsDialog from "@/components/dashboard/goals-section/goal-details-dialog";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 
@@ -7,6 +9,8 @@ interface GoalsCardProps {
   title: string;
   startingDate: string;
   endingDate: string;
+  description: string;
+  progressPercentage: number;
 }
 
 export default function GoalsCard({
@@ -15,23 +19,38 @@ export default function GoalsCard({
   choosen_emoji,
   startingDate,
   endingDate,
+  description,
+  progressPercentage,
 }: GoalsCardProps) {
   return (
-    <article className="w-full overflow-hidden rounded-xl border border-border bg-card cursor-pointer">
-      <div
-        className="flex h-24 items-center justify-center text-4xl"
-        style={{ backgroundColor: choosen_color }}
-      >
-        <span aria-hidden="true">{choosen_emoji}</span>
-      </div>
-      <div className="p-4">
-        <Heading as="h3" className="text-base leading-snug">
-          {title}
-        </Heading>
-        <Text className="text-muted-foreground text-sm">
-          {startingDate} - {endingDate}
-        </Text>
-      </div>
-    </article>
+    <Dialog>
+      <DialogTrigger asChild>
+        <article className="w-full overflow-hidden rounded-xl border border-border bg-card cursor-pointer">
+          <div
+            className="flex h-24 items-center justify-center text-4xl"
+            style={{ backgroundColor: choosen_color }}
+          >
+            <span aria-hidden="true">{choosen_emoji}</span>
+          </div>
+          <div className="p-4">
+            <Heading as="h3" className="text-base leading-snug">
+              {title}
+            </Heading>
+            <Text className="text-muted-foreground text-sm">
+              {startingDate} - {endingDate}
+            </Text>
+          </div>
+        </article>
+      </DialogTrigger>
+      <GoalDetailsDialog
+        choosenColor={choosen_color}
+        choosenEmoji={choosen_emoji}
+        title={title}
+        startingDate={startingDate}
+        endingDate={endingDate}
+        description={description}
+        progressPercentage={progressPercentage}
+      />
+    </Dialog>
   );
 }

@@ -21,6 +21,7 @@ export interface GoalsData {
   id: number;
   title: string;
   description: string;
+  progressPercentage: number;
   startingDate: string;
   endingDate: string;
   choosen_color: string;
