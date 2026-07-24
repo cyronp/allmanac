@@ -16,7 +16,7 @@ export default function AppPage({ username }: AppPageProps) {
   username = dashboardMockData.user.name;
 
   return (
-    <div className="relative z-0 min-w-0 w-full pr-1">
+    <div className="relative z-0 min-w-0 w-full">
       {/* Content wrapper - guaranteed to sit on top of background glows */}
       <div className="relative z-10 flex flex-col w-full gap-4 min-w-0">
         {/* Heading */}
