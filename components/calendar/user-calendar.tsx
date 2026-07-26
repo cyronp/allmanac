@@ -24,6 +24,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { EmojiAvatar } from "../ui/emoji-calendar";
 
 export interface CalendarEvent {
   id: string;
@@ -31,6 +32,8 @@ export interface CalendarEvent {
   date: Date | string;
   time?: string;
   color?: string;
+  choosen_emoji?: string;
+  choosen_color?: string;
 }
 
 export interface CalendarDayContext {
@@ -327,12 +330,18 @@ export function UserCalendar({
                         >
                           {renderEvent?.(event) ?? (
                             <>
+                              {event.choosen_emoji && (
+                                <EmojiAvatar
+                                  size="sm"
+                                  choosen_emoji={event.choosen_emoji}
+                                  choosen_color={event.choosen_color}
+                                />
+                              )}
                               {event.time && (
                                 <span className="shrink-0 text-[0.65rem] text-muted-foreground">
                                   {event.time}
                                 </span>
                               )}
-                              <span className="truncate">{event.title}</span>
                             </>
                           )}
                         </button>
