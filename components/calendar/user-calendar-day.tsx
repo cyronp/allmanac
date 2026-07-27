@@ -6,6 +6,7 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
@@ -17,6 +18,7 @@ import type {
   CalendarDayContext,
 } from "./user-calendar.types";
 import { UserCalendarGoalCard } from "./user-calendar-goal-card";
+import { Button } from "../ui/button";
 
 const MAX_VISIBLE_GOALS = 3;
 
@@ -133,7 +135,7 @@ export function UserCalendarDay({
           <DrawerDescription>
             {events.length === 0
               ? "No goals scheduled for this day."
-              : `${events.length} ${events.length === 1 ? "goal" : "goals"} scheduled.`}
+              : `${events.length} ${events.length === 1 ? "goal" : "goals"} scheduled for this day.`}
           </DrawerDescription>
         </DrawerHeader>
 
@@ -144,6 +146,9 @@ export function UserCalendarDay({
             ))}
           </div>
         )}
+        <DrawerFooter>
+          <Button size="lg">Edit schedule</Button>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
