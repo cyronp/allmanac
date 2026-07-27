@@ -173,6 +173,8 @@
       "progressPercentage": 35,
       "startingDate": "01/08/2026",
       "endingDate": "30/11/2026",
+      "startTime": "06:30",
+      "endTime": "07:30",
       "choosen_color": "#22C55E",
       "choosen_emoji": "🏃"
     },
@@ -183,6 +185,8 @@
       "progressPercentage": 70,
       "startingDate": "15/07/2026",
       "endingDate": "15/09/2026",
+      "startTime": "19:00",
+      "endTime": "21:00",
       "choosen_color": "#3B82F6",
       "choosen_emoji": "💻"
     },
@@ -193,6 +197,8 @@
       "progressPercentage": 58,
       "startingDate": "01/01/2026",
       "endingDate": "31/12/2026",
+      "startTime": "21:00",
+      "endTime": "21:30",
       "choosen_color": "#A855F7",
       "choosen_emoji": "📚"
     },
@@ -203,6 +209,8 @@
       "progressPercentage": 20,
       "startingDate": "01/01/2026",
       "endingDate": "31/12/2026",
+      "startTime": "20:30",
+      "endTime": "21:00",
       "choosen_color": "#A8554d",
       "choosen_emoji": "📚"
     }

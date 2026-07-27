@@ -16,6 +16,8 @@ const goalEvents: CalendarEvent[] = dashboardMockData.goals.flatMap((goal) => {
       id: `${goal.id}-${format(date, "yyyy-MM-dd")}`,
       title: goal.title,
       date: format(date, "yyyy-MM-dd"),
+      startTime: goal.startTime,
+      endTime: goal.endTime,
       choosen_emoji: goal.choosen_emoji,
       choosen_color: goal.choosen_color,
     }),

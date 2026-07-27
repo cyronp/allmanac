@@ -24,6 +24,8 @@ export interface GoalsData {
   progressPercentage: number;
   startingDate: string;
   endingDate: string;
+  startTime: string;
+  endTime: string;
   choosen_color: string;
   choosen_emoji: string;
 }
