@@ -25,6 +25,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EmojiAvatar } from "../ui/emoji-calendar";
+import { AvatarGroup, AvatarGroupCount } from "../ui/avatar";
+
+const MAX_VISIBLE_GOALS = 3;
 
 export interface CalendarEvent {
   id: string;
@@ -64,7 +67,7 @@ export interface CalendarProps {
   onMonthChange?: (month: Date) => void;
   selected?: Date;
   defaultSelected?: Date;
-  onSelect?: (date: Date) => void;
+  onSelect?: (date: Date | undefined) => void;
   onEventClick?: (event: CalendarEvent) => void;
   isDateDisabled?: (date: Date) => boolean;
   renderDayContent?: (day: CalendarDayContext) => React.ReactNode;
@@ -104,6 +107,7 @@ export function UserCalendar({
   navigateOnOutsideDayClick = true,
   maxEventsPerDay = 3,
 }: CalendarProps) {
+  const calendarRef = React.useRef<HTMLElement>(null);
   const today = React.useMemo(() => new Date(), []);
   const [internalMonth, setInternalMonth] = React.useState(() =>
     startOfMonth(defaultMonth ?? defaultSelected ?? today),
@@ -114,6 +118,26 @@ export function UserCalendar({
 
   const visibleMonth = startOfMonth(month ?? internalMonth);
   const selectedDate = selected ?? internalSelected;
+
+  React.useEffect(() => {
+    if (!selectedDate) return;
+
+    const clearSelectionOnOutsideClick = (event: PointerEvent) => {
+      if (calendarRef.current?.contains(event.target as Node)) return;
+
+      if (selected === undefined) {
+        setInternalSelected(undefined);
+      }
+
+      onSelect?.(undefined);
+    };
+
+    document.addEventListener("pointerdown", clearSelectionOnOutsideClick);
+
+    return () => {
+      document.removeEventListener("pointerdown", clearSelectionOnOutsideClick);
+    };
+  }, [onSelect, selected, selectedDate]);
 
   const calendarDays = React.useMemo(() => {
     const firstDay = startOfWeek(startOfMonth(visibleMonth), { weekStartsOn });
@@ -158,41 +182,32 @@ export function UserCalendar({
   const selectDay = (date: Date, isCurrentMonth: boolean) => {
     if (isDateDisabled?.(date)) return;
 
+    const nextSelectedDate =
+      selectedDate && isSameDay(date, selectedDate) ? undefined : date;
+
     if (selected === undefined) {
-      setInternalSelected(date);
+      setInternalSelected(nextSelectedDate);
     }
 
-    if (!isCurrentMonth && navigateOnOutsideDayClick) {
+    if (nextSelectedDate && !isCurrentMonth && navigateOnOutsideDayClick) {
       setVisibleMonth(date);
     }
 
-    onSelect?.(date);
+    onSelect?.(nextSelectedDate);
   };
 
   return (
     <section
+      ref={calendarRef}
       aria-label="Calendar"
       className={cn("w-full min-w-0", classNames?.root, className)}
     >
       <div
         className={cn(
-          "mb-4 flex flex-wrap items-center justify-between gap-3",
+          "mb-4 flex flex-wrap items-center gap-2",
           classNames?.toolbar,
         )}
       >
-        <div>
-          <p
-            className="text-lg font-semibold capitalize"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {new Intl.DateTimeFormat(locale, {
-              month: "long",
-              year: "numeric",
-            }).format(visibleMonth)}
-          </p>
-        </div>
-
         <div className="flex items-center gap-1">
           <Button
             type="button"
@@ -220,6 +235,18 @@ export function UserCalendar({
           >
             <ChevronRightIcon />
           </Button>
+          <div>
+            <p
+              className="text-lg font-semibold capitalize"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {new Intl.DateTimeFormat(locale, {
+                month: "long",
+                year: "numeric",
+              }).format(visibleMonth)}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -256,7 +283,10 @@ export function UserCalendar({
                 : false;
               const isToday = isSameDay(date, today);
               const dayEvents = eventsByDate.get(dateKey(date)) ?? [];
-              const visibleEvents = dayEvents.slice(0, maxEventsPerDay);
+              const visibleEvents = dayEvents.slice(
+                0,
+                Math.min(maxEventsPerDay, MAX_VISIBLE_GOALS),
+              );
               const hiddenEventCount = dayEvents.length - visibleEvents.length;
               const dayContext: CalendarDayContext = {
                 date,
@@ -274,7 +304,8 @@ export function UserCalendar({
                   aria-selected={isSelected}
                   key={date.toISOString()}
                   className={cn(
-                    "cursor-pointer min-h-28 border-b border-r p-2 transition-colors flex justify-end",
+                    "cursor-pointer min-h-28 border-b border-r p-2 transition-colors flex flex-col justify-between",
+                    isToday && "bg-muted/50",
                     index % 7 === 6 && "border-r-0",
                     index >= calendarDays.length - 7 && "border-b-0",
                     !isCurrentMonth && "bg-muted/15",
@@ -282,75 +313,51 @@ export function UserCalendar({
                     classNames?.day,
                   )}
                 >
-                  <Button
-                    variant={!isCurrentMonth ? "outline" : "default"}
-                    type="button"
-                    disabled={
-                      isDisabled || (!isCurrentMonth && !showOutsideDays)
-                    }
-                    aria-label={new Intl.DateTimeFormat(locale, {
-                      dateStyle: "full",
-                    }).format(date)}
-                    aria-current={isToday ? "date" : undefined}
-                    className={cn(
-                      "min-w-10",
-                      isToday && "bg-primary text-primary-foreground",
-                      isSelected &&
-                        !isToday &&
-                        "ring-2 ring-primary ring-offset-2 ring-offset-background",
-                      !isCurrentMonth && "text-muted-foreground",
-                      !isCurrentMonth && !showOutsideDays && "invisible",
-                      isDisabled && "cursor-not-allowed opacity-35",
-                      classNames?.dayButton,
-                    )}
-                  >
-                    {renderDayContent?.(dayContext) ?? format(date, "d")}
-                  </Button>
-
+                  <div className="flex w-full justify-end">
+                    <span
+                      aria-label={new Intl.DateTimeFormat(locale, {
+                        dateStyle: "full",
+                      }).format(date)}
+                      aria-current={isToday ? "date" : undefined}
+                      className={cn(
+                        "flex size-8 items-center justify-center rounded-md text-sm font-medium text-white",
+                        isToday && "bg-primary text-primary-foreground",
+                        isSelected &&
+                          !isToday &&
+                          "ring-2 ring-primary ring-offset-2 ring-offset-background",
+                        !isCurrentMonth && "opacity-60",
+                        !isCurrentMonth && !showOutsideDays && "invisible",
+                        isDisabled && "opacity-35",
+                        classNames?.dayButton,
+                      )}
+                    >
+                      {renderDayContent?.(dayContext) ?? format(date, "d")}
+                    </span>
+                  </div>
                   {(isCurrentMonth || showOutsideDays) && (
                     <div className="mt-1 space-y-1">
-                      {visibleEvents.map((event) => (
-                        <button
-                          type="button"
-                          key={event.id}
-                          title={event.title}
-                          onClick={() => onEventClick?.(event)}
-                          className={cn(
-                            "flex h-6 w-full items-center gap-1.5 overflow-hidden rounded-md bg-primary/12 px-1.5 text-left text-xs font-medium text-foreground outline-none transition-colors hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-ring",
-                            !onEventClick && "pointer-events-none",
-                            classNames?.event,
-                          )}
-                          style={
-                            event.color
-                              ? {
-                                  borderLeft: `3px solid ${event.color}`,
-                                }
-                              : undefined
-                          }
-                        >
-                          {renderEvent?.(event) ?? (
-                            <>
-                              {event.choosen_emoji && (
+                      {(visibleEvents.some((event) => event.choosen_emoji) ||
+                        hiddenEventCount > 0) && (
+                        <AvatarGroup>
+                          {visibleEvents.map(
+                            (event) =>
+                              event.choosen_emoji && (
                                 <EmojiAvatar
+                                  className={!isCurrentMonth ? "grayscale" : ""}
+                                  key={event.id}
                                   size="sm"
+                                  title={event.title}
                                   choosen_emoji={event.choosen_emoji}
                                   choosen_color={event.choosen_color}
                                 />
-                              )}
-                              {event.time && (
-                                <span className="shrink-0 text-[0.65rem] text-muted-foreground">
-                                  {event.time}
-                                </span>
-                              )}
-                            </>
+                              ),
                           )}
-                        </button>
-                      ))}
-
-                      {hiddenEventCount > 0 && (
-                        <p className="px-1 text-xs font-medium text-muted-foreground">
-                          +{hiddenEventCount} more
-                        </p>
+                          {hiddenEventCount > 0 && (
+                            <AvatarGroupCount>
+                              +{hiddenEventCount}
+                            </AvatarGroupCount>
+                          )}
+                        </AvatarGroup>
                       )}
                     </div>
                   )}
