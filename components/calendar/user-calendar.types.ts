@@ -8,6 +8,11 @@ export interface CalendarEvent {
   time?: string;
   startTime?: string;
   endTime?: string;
+  timeBlocks?: Array<{
+    id: string;
+    startTime: string;
+    endTime: string;
+  }>;
   color?: string;
   choosen_emoji?: string;
   choosen_color?: string;

@@ -53,6 +53,12 @@ export function UserCalendarDay({
   const hiddenEventCount = events.length - visibleEvents.length;
   const hasEventAvatars =
     visibleEvents.some((event) => event.choosen_emoji) || hiddenEventCount > 0;
+
+  const dateFormat = new Intl.DateTimeFormat(locale, {
+    dateStyle: "short",
+  }).format(date);
+
+
   const dateLabel = new Intl.DateTimeFormat(locale, {
     dateStyle: "full",
   }).format(date);
@@ -70,6 +76,7 @@ export function UserCalendarDay({
       onOpenChange={handleDrawerOpenChange}
     >
       <div
+        id={dateFormat}
         onClick={() => onSelect(date, isCurrentMonth)}
         role="gridcell"
         aria-selected={isSelected}

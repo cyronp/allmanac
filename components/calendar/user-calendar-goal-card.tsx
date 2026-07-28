@@ -9,6 +9,12 @@ interface UserCalendarGoalCardProps {
 }
 
 function getGoalTime(goal: CalendarEvent) {
+  if (goal.timeBlocks?.length) {
+    return goal.timeBlocks
+      .map(({ startTime, endTime }) => `${startTime}–${endTime}`)
+      .join(" • ");
+  }
+
   if (goal.startTime && goal.endTime) {
     return `${goal.startTime}–${goal.endTime}`;
   }

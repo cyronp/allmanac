@@ -1,6 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { format, differenceInCalendarDays, addDays, subDays } from "date-fns";
+import {
+  addDays,
+  differenceInCalendarDays,
+  format,
+  isSameDay,
+  parse,
+  subDays,
+} from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -22,7 +29,7 @@ const hours = Array.from({ length: 24 }, (_, i) => {
 
 interface TimelineProps {
   children?: React.ReactNode;
-  events?: Array<TimelineBlockProps & { id: string }>;
+  events?: Array<TimelineBlockProps & { id: string; date: string }>;
 }
 
 export default function Timeline({ children, events }: TimelineProps) {
@@ -72,6 +79,9 @@ export default function Timeline({ children, events }: TimelineProps) {
   const currentTimePos =
     (currentTime.getHours() + currentTime.getMinutes() / 60) * HOUR_WIDTH;
   const trackWidth = 24 * HOUR_WIDTH;
+  const visibleEvents = events?.filter((event) =>
+    isSameDay(parse(event.date, "dd/MM/yyyy", new Date()), date ?? new Date()),
+  );
 
   const handlePrevDay = () => {
     const current = date || new Date();
@@ -215,9 +225,18 @@ export default function Timeline({ children, events }: TimelineProps) {
                 </div>
               )}
 
-              {events
-                ? events.map(({ id, ...event }) => (
-                    <TimelineCard key={id} {...event} />
+              {visibleEvents
+                ? visibleEvents.map((event) => (
+                    <TimelineCard
+                      key={event.id}
+                      start={event.start}
+                      end={event.end}
+                      title={event.title}
+                      description={event.description}
+                      className={event.className}
+                    >
+                      {event.children}
+                    </TimelineCard>
                   ))
                 : children}
             </div>

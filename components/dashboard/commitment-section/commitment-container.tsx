@@ -4,17 +4,17 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
-interface PendencyContainerProps {
+interface CommitmentContainerProps {
   title: string;
   href: string;
   children: React.ReactNode;
 }
 
-export default function PendencyContainer({
+export default function CommitmentContainer({
   title,
   href,
   children,
-}: PendencyContainerProps) {
+}: CommitmentContainerProps) {
   return (
     <div className="flex flex-col gap-4">
       <Heading

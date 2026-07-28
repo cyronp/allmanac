@@ -1,30 +1,45 @@
-import { eachDayOfInterval, format, parse } from "date-fns";
+import { endOfYear, isValid, parseISO, startOfYear } from "date-fns";
 
+import { dashboardMockDatabase } from "@/app/types/dashboard-data";
 import {
   UserCalendar,
   type CalendarEvent,
 } from "@/components/calendar/user-calendar";
 import { Heading } from "@/components/ui/heading";
-import { dashboardMockData } from "@/app/types/dashboard-data";
+import {
+  getActivityOccurrences,
+  groupActivityOccurrences,
+} from "@/lib/dashboard-schedule";
 
-const goalEvents: CalendarEvent[] = dashboardMockData.goals.flatMap((goal) => {
-  const startingDate = parse(goal.startingDate, "dd/MM/yyyy", new Date());
-  const endingDate = parse(goal.endingDate, "dd/MM/yyyy", new Date());
+interface CalendarPageProps {
+  searchParams: Promise<{ date?: string | string[] }>;
+}
 
-  return eachDayOfInterval({ start: startingDate, end: endingDate }).map(
-    (date) => ({
-      id: `${goal.id}-${format(date, "yyyy-MM-dd")}`,
-      title: goal.title,
-      date: format(date, "yyyy-MM-dd"),
-      startTime: goal.startTime,
-      endTime: goal.endTime,
-      choosen_emoji: goal.choosen_emoji,
-      choosen_color: goal.choosen_color,
-    }),
-  );
-});
+export default async function CalendarPage({
+  searchParams,
+}: CalendarPageProps) {
+  const dateParam = (await searchParams).date;
+  const parsedDate =
+    typeof dateParam === "string" ? parseISO(dateParam) : undefined;
+  const selectedDate =
+    parsedDate && isValid(parsedDate) ? parsedDate : undefined;
+  const referenceDate = selectedDate ?? new Date();
 
-export default function CalendarPage() {
+  const calendarEvents: CalendarEvent[] = groupActivityOccurrences(
+    getActivityOccurrences(
+      dashboardMockDatabase,
+      startOfYear(referenceDate),
+      endOfYear(referenceDate),
+    ),
+  ).map((occurrence) => ({
+    id: occurrence.id,
+    title: occurrence.title,
+    date: occurrence.isoDate,
+    timeBlocks: occurrence.timeBlocks,
+    choosen_emoji: occurrence.chosenEmoji,
+    choosen_color: occurrence.chosenColor,
+  }));
+
   return (
     <div className="relative z-0 min-w-0 w-full">
       <div className="relative z-10 flex min-w-0 w-full flex-col gap-6">
@@ -33,8 +48,10 @@ export default function CalendarPage() {
         </Heading>
 
         <UserCalendar
-          events={goalEvents}
-          maxEventsPerDay={dashboardMockData.goals.length}
+          events={calendarEvents}
+          defaultMonth={selectedDate}
+          defaultSelected={selectedDate}
+          maxEventsPerDay={dashboardMockDatabase.activities.length}
         />
       </div>
     </div>

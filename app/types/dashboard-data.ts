@@ -1,41 +1,58 @@
-import dashboardMockDataJson from "@/data/dashboard.mock.json";
+import dashboardMockDatabaseJson from "@/data/dashboard.mock.json";
 
-export interface PendencyData {
+export type ActivityType = "commitment" | "goal";
+export type RecurrenceFrequency = "once" | "daily" | "weekly";
+
+export interface DashboardUser {
   id: string;
-  title: string;
-  startTime: string;
-  endTime?: string;
-  date?: string;
-  url?: string;
+  name: string;
+  description: string;
+  timezone: string;
 }
 
-export interface TimelineEventData {
+export interface ActivityData {
   id: string;
+  userId: string;
+  type: ActivityType;
   title: string;
-  start: string;
-  end: string;
   description: string;
+  chosenColor: string;
+  chosenEmoji: string;
+  progressPercentage?: number;
+  isActive: boolean;
 }
 
-export interface GoalsData {
-  id: number;
-  title: string;
-  description: string;
-  progressPercentage: number;
-  startingDate: string;
-  endingDate: string;
+export interface RecurrenceRule {
+  frequency: RecurrenceFrequency;
+  interval: number;
+  /** Sunday is 0 and Saturday is 6, matching JavaScript's Date#getDay. */
+  daysOfWeek: number[];
+}
+
+export interface ScheduleData {
+  id: string;
+  activityId: string;
+  timezone: string;
+  startsOn: string;
+  endsOn: string | null;
+  recurrence: RecurrenceRule;
+  excludedDates: string[];
+  timeBlocks: ScheduleTimeBlockData[];
+}
+
+export interface ScheduleTimeBlockData {
+  id: string;
   startTime: string;
   endTime: string;
-  choosen_color: string;
-  choosen_emoji: string;
+  position: number;
 }
 
-export interface DashboardData {
-  user: { name: string };
-  todayPendencies: PendencyData[];
-  upcomingPendencies: PendencyData[];
-  timelineEvents: TimelineEventData[];
-  goals: GoalsData[];
+export interface DashboardDatabase {
+  schemaVersion: number;
+  users: DashboardUser[];
+  activities: ActivityData[];
+  schedules: ScheduleData[];
 }
 
-export const dashboardMockData: DashboardData = dashboardMockDataJson;
+export const dashboardMockDatabase =
+  dashboardMockDatabaseJson as DashboardDatabase;
