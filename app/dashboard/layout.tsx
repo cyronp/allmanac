@@ -13,7 +13,7 @@ export default function AppLayout({
       <AppSidebar />
       <SidebarInset className="min-h-0 min-w-0 overflow-hidden bg-sidebar">
         <AppHeader />
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden pr-4 pb-4">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden pl-2 pr-2 pb-2 md:pl-0 md:pr-4 md:pb-4">
           <ScrollArea
             type="always"
             className="min-h-0 min-w-0 flex-1 rounded-xl border border-sidebar-border bg-background shadow-xs"
