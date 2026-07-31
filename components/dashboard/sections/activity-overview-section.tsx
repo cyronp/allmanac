@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 
-import ActivityMonthCalendar from "@/components/dashboard/activity-calendar-section/activity-month-calendar";
-import GoalConsistencyChart from "@/components/dashboard/goal-consistency-section/goal-consistency-chart";
-import TodaysDo from "@/components/dashboard/todays-do-section/todays-do";
+import MonthlyActivityCalendar from "@/components/dashboard/activity-overview/monthly-activity-calendar";
+import GoalConsistencyChart from "@/components/dashboard/activity-overview/goal-consistency-chart";
+import TodayTodos from "@/components/dashboard/activity-overview/today-todos";
 
-interface DashboardActivityOverviewProps {
+interface ActivityOverviewSectionProps {
   initialDate: string;
 }
 
-export default function DashboardActivityOverview({
+export default function ActivityOverviewSection({
   initialDate,
-}: DashboardActivityOverviewProps) {
+}: ActivityOverviewSectionProps) {
   const [monthOffset, setMonthOffset] = useState(0);
   const [completionOverrides, setCompletionOverrides] = useState<
     Record<string, boolean>
@@ -31,13 +31,13 @@ export default function DashboardActivityOverview({
 
   return (
     <div className="grid w-full items-stretch gap-4 lg:grid-cols-[minmax(20rem,28rem)_minmax(0,1fr)] xl:grid-cols-[minmax(20rem,25rem)_minmax(18rem,1fr)_minmax(18rem,1fr)]">
-      <ActivityMonthCalendar
+      <MonthlyActivityCalendar
         initialDate={initialDate}
         monthOffset={monthOffset}
         completionOverrides={completionOverrides}
         onMonthOffsetChange={setMonthOffset}
       />
-      <TodaysDo
+      <TodayTodos
         initialDate={initialDate}
         completionOverrides={completionOverrides}
         onCompletionChange={handleCompletionChange}

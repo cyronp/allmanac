@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface UserCalendarToolbarProps {
+interface ScheduleCalendarToolbarProps {
   className?: string;
   locale: string;
   today: Date;
@@ -16,13 +16,13 @@ interface UserCalendarToolbarProps {
   onMonthChange: (month: Date) => void;
 }
 
-export function UserCalendarToolbar({
+export function ScheduleCalendarToolbar({
   className,
   locale,
   today,
   visibleMonth,
   onMonthChange,
-}: UserCalendarToolbarProps) {
+}: ScheduleCalendarToolbarProps) {
   const monthLabel = new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",

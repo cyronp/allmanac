@@ -33,7 +33,7 @@ import {
 
 const WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-interface ActivityMonthCalendarProps {
+interface MonthlyActivityCalendarProps {
   initialDate: string;
   monthOffset: number;
   completionOverrides?: Record<string, boolean>;
@@ -55,12 +55,12 @@ interface DayGoal {
   title: string;
 }
 
-export default function ActivityMonthCalendar({
+export default function MonthlyActivityCalendar({
   initialDate,
   monthOffset,
   completionOverrides = {},
   onMonthOffsetChange,
-}: ActivityMonthCalendarProps) {
+}: MonthlyActivityCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const subscribeToCurrentDay = useCallback((onDayChange: () => void) => {

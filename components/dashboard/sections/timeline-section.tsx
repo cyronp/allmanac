@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
-import * as React from "react";
+import Timeline, { type TimelineEntry } from "@/components/dashboard/timeline/timeline";
 
-interface ClockContainerProps {
-  children: React.ReactNode;
+interface TimelineSectionProps {
+  events: TimelineEntry[];
 }
 
-export default function TimelineContainer({ children }: ClockContainerProps) {
+export default function TimelineSection({ events }: TimelineSectionProps) {
   return (
     <div className="min-w-0 w-full gap-4 flex flex-col">
       <Heading as="h2" className="text-2xl">
@@ -14,7 +14,7 @@ export default function TimelineContainer({ children }: ClockContainerProps) {
       </Heading>
       <Card>
         <CardContent className="flex min-w-0 flex-col gap-2 overflow-y-auto scrollbar-none">
-          {children}
+          <Timeline events={events} />
         </CardContent>
       </Card>
     </div>

@@ -1,7 +1,7 @@
 import { BriefcaseBusinessIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
-export default function HabitsCard() {
+export default function HabitCard() {
   return (
     <div className="flex flex-col gap-2 rounded-xl bg-muted p-4">
       <div className="flex flex-row gap-2">

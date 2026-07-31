@@ -1,12 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
-import * as React from "react";
+import GoalCard, { type GoalCardProps } from "@/components/dashboard/goals/goal-card";
 
-interface GoalsContainerProps {
-  children: React.ReactNode;
+export interface DashboardGoal extends GoalCardProps {
+  id: string;
 }
 
-export default function GoalsContainer({ children }: GoalsContainerProps) {
+interface GoalsSectionProps {
+  goals: DashboardGoal[];
+}
+
+export default function GoalsSection({ goals }: GoalsSectionProps) {
   return (
     <div className="min-w-0 w-full gap-4 flex flex-col">
       <Heading as="h2" className="text-2xl">
@@ -14,7 +18,9 @@ export default function GoalsContainer({ children }: GoalsContainerProps) {
       </Heading>
       <Card>
         <CardContent className="flex flex-col gap-2 lg:flex-row">
-          {children}
+          {goals.map(({ id, ...goal }) => (
+            <GoalCard key={id} {...goal} />
+          ))}
         </CardContent>
       </Card>
     </div>

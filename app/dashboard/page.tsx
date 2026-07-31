@@ -7,13 +7,10 @@ import {
 } from "date-fns";
 
 import { dashboardMockDatabase } from "@/app/types/dashboard-data";
-import GoalsCard from "@/components/dashboard/goals-section/goals-card";
-import GoalsContainer from "@/components/dashboard/goals-section/goals-container";
-import DashboardActivityOverview from "@/components/dashboard/activity-calendar-section/dashboard-activity-overview";
-import Timeline from "@/components/dashboard/timeline-section/timeline";
-import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
-import { Heading } from "@/components/ui/heading";
-import { Text } from "@/components/ui/text";
+import DashboardHeader from "@/components/dashboard/dashboard-header";
+import ActivityOverviewSection from "@/components/dashboard/sections/activity-overview-section";
+import GoalsSection from "@/components/dashboard/sections/goals-section";
+import TimelineSection from "@/components/dashboard/sections/timeline-section";
 import {
   getActivityOccurrences,
   getActivitySchedules,
@@ -60,38 +57,21 @@ export default function AppPage({ username }: AppPageProps) {
   return (
     <div className="relative z-0 min-w-0 w-full">
       <div className="relative z-10 flex flex-col w-full gap-4 min-w-0">
-        <div className="flex flex-col">
-          <Heading as="h1" className="text-4xl tracking-tight">
-            Good to see you {username}! 👋
-          </Heading>
-          <Text
-            as="span"
-            className="text-lg text-muted-foreground tracking-tighter"
-          >
-            {"Let's"} have a better life cycle together!
-          </Text>
-        </div>
-
-        <DashboardActivityOverview initialDate={format(today, "yyyy-MM-dd")} />
-        
-        <TimelineContainer>
-          <Timeline events={timelineEvents} />
-        </TimelineContainer>
-
-        <GoalsContainer>
-          {goals.map((goal) => (
-            <GoalsCard
-              key={goal.id}
-              title={goal.title}
-              description={goal.description}
-              choosen_color={goal.chosenColor}
-              choosen_emoji={goal.chosenEmoji}
-              startingDate={goal.startingDate}
-              endingDate={goal.endingDate}
-              progressPercentage={goal.progressPercentage ?? 0}
-            />
-          ))}
-        </GoalsContainer>
+        <DashboardHeader username={username} />
+        <ActivityOverviewSection initialDate={format(today, "yyyy-MM-dd")} />
+        <TimelineSection events={timelineEvents} />
+        <GoalsSection
+          goals={goals.map((goal) => ({
+            id: goal.id,
+            title: goal.title,
+            description: goal.description,
+            chosenColor: goal.chosenColor,
+            chosenEmoji: goal.chosenEmoji,
+            startingDate: goal.startingDate,
+            endingDate: goal.endingDate,
+            progressPercentage: goal.progressPercentage ?? 0,
+          }))}
+        />
       </div>
     </div>
   );

@@ -18,13 +18,13 @@ import {
   defaultSettingsPageId,
   settingsPages,
   type SettingsPageId,
-} from "./settings-pages";
+} from "./settings-page-registry";
 
-interface SettingsProps {
+interface SettingsDialogProps {
   children: ReactNode;
 }
 
-export default function Settings({ children }: SettingsProps) {
+export default function SettingsDialog({ children }: SettingsDialogProps) {
   const [activePageId, setActivePageId] =
     useState<SettingsPageId>(defaultSettingsPageId);
 

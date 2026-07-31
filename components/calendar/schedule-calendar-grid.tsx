@@ -3,15 +3,15 @@ import { isSameDay, isSameMonth } from "date-fns";
 
 import { cn } from "@/lib/utils";
 
-import { UserCalendarDay } from "./user-calendar-day";
+import { ScheduleCalendarDay } from "./schedule-calendar-day";
 import type {
   CalendarClassNames,
   CalendarDayContext,
   CalendarEvent,
-} from "./user-calendar.types";
-import { getDateKey } from "./user-calendar.utils";
+} from "./schedule-calendar.types";
+import { getDateKey } from "./schedule-calendar.utils";
 
-interface UserCalendarGridProps {
+interface ScheduleCalendarGridProps {
   calendarDays: Date[];
   classNames?: CalendarClassNames;
   eventsByDate: Map<string, CalendarEvent[]>;
@@ -27,7 +27,7 @@ interface UserCalendarGridProps {
   renderDayContent?: (day: CalendarDayContext) => React.ReactNode;
 }
 
-export function UserCalendarGrid({
+export function ScheduleCalendarGrid({
   calendarDays,
   classNames,
   eventsByDate,
@@ -41,7 +41,7 @@ export function UserCalendarGrid({
   isDateDisabled,
   onDaySelect,
   renderDayContent,
-}: UserCalendarGridProps) {
+}: ScheduleCalendarGridProps) {
   const monthLabel = new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",
@@ -83,7 +83,7 @@ export function UserCalendarGrid({
             };
 
             return (
-              <UserCalendarDay
+              <ScheduleCalendarDay
                 key={date.toISOString()}
                 day={day}
                 classNames={classNames}

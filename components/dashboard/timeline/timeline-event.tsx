@@ -18,7 +18,7 @@ import { useState } from "react";
 
 export const HOUR_WIDTH = 120;
 
-export interface TimelineBlockProps {
+export interface TimelineEventProps {
   start: string;
   end: string;
   title: string;
@@ -32,14 +32,14 @@ export function timeToHours(time: string): number {
   return h + m / 60;
 }
 
-export default function TimelineCard({
+export default function TimelineEvent({
   start,
   end,
   title,
   description,
   children,
   className,
-}: TimelineBlockProps) {
+}: TimelineEventProps) {
   const [isEditable, setIsEditable] = useState(false);
 
   const handleToggleEdit = () => {

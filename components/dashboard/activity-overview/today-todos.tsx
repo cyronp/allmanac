@@ -19,7 +19,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-interface TodaysDoProps {
+interface TodayTodosProps {
   initialDate: string;
   completionOverrides: Record<string, boolean>;
   onCompletionChange: (
@@ -29,11 +29,11 @@ interface TodaysDoProps {
   ) => void;
 }
 
-export default function TodaysDo({
+export default function TodayTodos({
   initialDate,
   completionOverrides,
   onCompletionChange,
-}: TodaysDoProps) {
+}: TodayTodosProps) {
   const subscribeToCurrentDay = useCallback((onDayChange: () => void) => {
     const intervalId = window.setInterval(onDayChange, 60_000);
     window.addEventListener("focus", onDayChange);
@@ -72,11 +72,11 @@ export default function TodaysDo({
   return (
     <Card
       className="h-full min-h-80 min-w-0"
-      aria-labelledby="todays-do-heading"
+      aria-labelledby="today-todos-heading"
     >
       <CardHeader className="border-b gap-0">
         <CardTitle
-          id="todays-do-heading"
+          id="today-todos-heading"
         >
           Today&apos;s Todos
         </CardTitle>

@@ -24,14 +24,14 @@ import {
   useSidebar,
 } from "../ui/sidebar";
 import { Text } from "../ui/text";
-import Settings from "../settings/settings";
+import SettingsDialog from "../settings/settings-dialog";
 
-export default function UserSidebarNav() {
+export default function AccountMenu() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
   return (
-    <Settings>
+    <SettingsDialog>
       <SidebarMenu>
         <SidebarMenuItem>
           <DropdownMenu>
@@ -98,6 +98,6 @@ export default function UserSidebarNav() {
           </DropdownMenu>
         </SidebarMenuItem>
       </SidebarMenu>
-    </Settings>
+    </SettingsDialog>
   );
 }

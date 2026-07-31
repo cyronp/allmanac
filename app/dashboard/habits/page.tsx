@@ -1,4 +1,4 @@
-import HabitsCard from "@/components/habits/habits-card";
+import HabitCard from "@/components/habits/habit-card";
 import { Heading } from "@/components/ui/heading";
 
 export default function Habits() {
@@ -9,10 +9,10 @@ export default function Habits() {
           Your Habits
         </Heading>
         <div className="flex flex-row border-2 border-muted p-4 rounded-xl gap-4">
-          <HabitsCard/>
-          <HabitsCard/>
-          <HabitsCard/>
-          <HabitsCard/>
+          <HabitCard/>
+          <HabitCard/>
+          <HabitCard/>
+          <HabitCard/>
         </div>
       </div>
     </div>

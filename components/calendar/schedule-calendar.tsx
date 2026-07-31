@@ -5,23 +5,23 @@ import { isSameDay, startOfMonth } from "date-fns";
 
 import { cn } from "@/lib/utils";
 
-import { UserCalendarGrid } from "./user-calendar-grid";
-import { UserCalendarToolbar } from "./user-calendar-toolbar";
-import type { CalendarProps } from "./user-calendar.types";
+import { ScheduleCalendarGrid } from "./schedule-calendar-grid";
+import { ScheduleCalendarToolbar } from "./schedule-calendar-toolbar";
+import type { CalendarProps } from "./schedule-calendar.types";
 import {
   getCalendarDays,
   getWeekdayLabels,
   groupEventsByDate,
-} from "./user-calendar.utils";
+} from "./schedule-calendar.utils";
 
 export type {
   CalendarClassNames,
   CalendarDayContext,
   CalendarEvent,
   CalendarProps,
-} from "./user-calendar.types";
+} from "./schedule-calendar.types";
 
-export function UserCalendar({
+export function ScheduleCalendar({
   className,
   classNames,
   events = [],
@@ -118,14 +118,14 @@ export function UserCalendar({
       aria-label="Calendar"
       className={cn("w-full min-w-0", classNames?.root, className)}
     >
-      <UserCalendarToolbar
+      <ScheduleCalendarToolbar
         className={classNames?.toolbar}
         locale={locale}
         today={today}
         visibleMonth={visibleMonth}
         onMonthChange={setVisibleMonth}
       />
-      <UserCalendarGrid
+      <ScheduleCalendarGrid
         calendarDays={calendarDays}
         classNames={classNames}
         eventsByDate={eventsByDate}

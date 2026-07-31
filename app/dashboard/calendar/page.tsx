@@ -2,9 +2,9 @@ import { endOfYear, isValid, parseISO, startOfYear } from "date-fns";
 
 import { dashboardMockDatabase } from "@/app/types/dashboard-data";
 import {
-  UserCalendar,
+  ScheduleCalendar,
   type CalendarEvent,
-} from "@/components/calendar/user-calendar";
+} from "@/components/calendar/schedule-calendar";
 import { Heading } from "@/components/ui/heading";
 import {
   getActivityOccurrences,
@@ -47,7 +47,7 @@ export default async function CalendarPage({
           Your Calendar
         </Heading>
 
-        <UserCalendar
+        <ScheduleCalendar
           events={calendarEvents}
           defaultMonth={selectedDate}
           defaultSelected={selectedDate}

@@ -19,7 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronDownIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import TimelineCard, { HOUR_WIDTH, type TimelineBlockProps } from "./timeline-card";
+import TimelineEvent, { HOUR_WIDTH, type TimelineEventProps } from "./timeline-event";
 
 const hours = Array.from({ length: 24 }, (_, i) => {
   const ampm = i >= 12 ? "PM" : "AM";
@@ -27,9 +27,14 @@ const hours = Array.from({ length: 24 }, (_, i) => {
   return `${hour}${ampm}`;
 });
 
+export interface TimelineEntry extends TimelineEventProps {
+  id: string;
+  date: string;
+}
+
 interface TimelineProps {
   children?: React.ReactNode;
-  events?: Array<TimelineBlockProps & { id: string; date: string }>;
+  events?: TimelineEntry[];
 }
 
 export default function Timeline({ children, events }: TimelineProps) {
@@ -227,7 +232,7 @@ export default function Timeline({ children, events }: TimelineProps) {
 
               {visibleEvents
                 ? visibleEvents.map((event) => (
-                    <TimelineCard
+                    <TimelineEvent
                       key={event.id}
                       start={event.start}
                       end={event.end}
@@ -236,7 +241,7 @@ export default function Timeline({ children, events }: TimelineProps) {
                       className={event.className}
                     >
                       {event.children}
-                    </TimelineCard>
+                    </TimelineEvent>
                   ))
                 : children}
             </div>

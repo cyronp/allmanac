@@ -10,7 +10,7 @@ import {
   type Day,
 } from "date-fns";
 
-import type { CalendarEvent } from "./user-calendar.types";
+import type { CalendarEvent } from "./schedule-calendar.types";
 
 export function getDateKey(date: Date) {
   return format(date, "yyyy-MM-dd");

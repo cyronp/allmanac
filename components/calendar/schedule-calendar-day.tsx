@@ -10,19 +10,19 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { EmojiAvatar } from "@/components/ui/emoji-calendar";
+import { EmojiAvatar } from "@/components/ui/emoji-avatar";
 import { cn } from "@/lib/utils";
 
 import type {
   CalendarClassNames,
   CalendarDayContext,
-} from "./user-calendar.types";
-import { UserCalendarGoalCard } from "./user-calendar-goal-card";
+} from "./schedule-calendar.types";
+import { CalendarEventCard } from "./calendar-event-card";
 import { Button } from "../ui/button";
 
 const MAX_VISIBLE_GOALS = 3;
 
-interface UserCalendarDayProps {
+interface ScheduleCalendarDayProps {
   day: CalendarDayContext;
   classNames?: CalendarClassNames;
   isLastColumn: boolean;
@@ -34,7 +34,7 @@ interface UserCalendarDayProps {
   renderDayContent?: (day: CalendarDayContext) => React.ReactNode;
 }
 
-export function UserCalendarDay({
+export function ScheduleCalendarDay({
   day,
   classNames,
   isLastColumn,
@@ -44,7 +44,7 @@ export function UserCalendarDay({
   showOutsideDays,
   onSelect,
   renderDayContent,
-}: UserCalendarDayProps) {
+}: ScheduleCalendarDayProps) {
   const { date, events, isCurrentMonth, isDisabled, isSelected, isToday } = day;
   const visibleEvents = events.slice(
     0,
@@ -149,7 +149,7 @@ export function UserCalendarDay({
         {events.length > 0 && (
           <div className="space-y-2 px-4 pb-4">
             {events.map((event) => (
-              <UserCalendarGoalCard key={event.id} goal={event} />
+              <CalendarEventCard key={event.id} event={event} />
             ))}
           </div>
         )}

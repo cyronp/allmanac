@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { settingsPages, type SettingsPageId } from "./settings-pages";
+import { settingsPages, type SettingsPageId } from "./settings-page-registry";
 import { Button } from "../ui/button";
 
 interface SettingsNavigationProps {

@@ -20,7 +20,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "../ui/sidebar";
-import UserSidebarNav from "./user-sidebar-nav";
+import AccountMenu from "./account-menu";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -82,7 +82,7 @@ export default function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="h-16 justify-center">
-        <UserSidebarNav />
+        <AccountMenu />
       </SidebarFooter>
     </Sidebar>
   );
