@@ -5,6 +5,7 @@ import {
   HouseIcon,
   SquareDashed,
   TrophyIcon,
+  TreeDeciduousIcon
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,13 +29,8 @@ import Link from "next/link";
 const navItems = [
   { title: "Dashboard", icon: HouseIcon, href: "/dashboard" },
   { title: "Calendar", icon: CalendarIcon, href: "/dashboard/calendar" },
+  { title: "Your Habits", icon: TreeDeciduousIcon, href: "/dashboard/habits" },
   { title: "Your Goals", icon: TrophyIcon, href: "/dashboard/goals" },
-];
-
-const recentItems = [
-  { title: "Example 1", href: "#" },
-  { title: "Example 2", href: "#" },
-  { title: "Example 3", href: "#" },
 ];
 
 export default function AppSidebar() {
@@ -84,25 +80,6 @@ export default function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        {!isCollapsed && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Recents</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {recentItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.href}>
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        )}
       </SidebarContent>
 
       <SidebarFooter className="h-16 justify-center">

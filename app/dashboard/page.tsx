@@ -12,6 +12,7 @@ import GoalsCard from "@/components/dashboard/goals-section/goals-card";
 import GoalsContainer from "@/components/dashboard/goals-section/goals-container";
 import CommitmentCard from "@/components/dashboard/commitment-section/commitment-card";
 import CommitmentContainer from "@/components/dashboard/commitment-section/commitment-container";
+import DashboardActivityOverview from "@/components/dashboard/activity-calendar-section/dashboard-activity-overview";
 import Timeline from "@/components/dashboard/timeline-section/timeline";
 import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
 import { Heading } from "@/components/ui/heading";
@@ -28,12 +29,7 @@ interface AppPageProps {
 
 const today = startOfDay(new Date());
 const todayCommitments = groupActivityOccurrences(
-  getActivityOccurrences(
-    dashboardMockDatabase,
-    today,
-    today,
-    "commitment",
-  ),
+  getActivityOccurrences(dashboardMockDatabase, today, today, "commitment"),
 );
 const upcomingCommitments = groupActivityOccurrences(
   getActivityOccurrences(
@@ -59,10 +55,7 @@ const timelineEvents = getActivityOccurrences(
 const goals = dashboardMockDatabase.activities.flatMap((activity) => {
   if (!activity.isActive || activity.type !== "goal") return [];
 
-  const schedule = getActivitySchedules(
-    dashboardMockDatabase,
-    activity.id,
-  )[0];
+  const schedule = getActivitySchedules(dashboardMockDatabase, activity.id)[0];
   if (!schedule) return [];
 
   return [
@@ -84,7 +77,7 @@ export default function AppPage({ username }: AppPageProps) {
       <div className="relative z-10 flex flex-col w-full gap-4 min-w-0">
         <div className="flex flex-col">
           <Heading as="h1" className="text-4xl tracking-tight">
-            Good to see you {username}!
+            Good to see you {username}! 👋
           </Heading>
           <Text
             as="span"
@@ -94,36 +87,8 @@ export default function AppPage({ username }: AppPageProps) {
           </Text>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-          <CommitmentContainer
-            title="Today's commitments"
-            href="dashboard/calendar"
-          >
-            {todayCommitments.map((commitment) => (
-              <CommitmentCard
-                key={commitment.id}
-                title={commitment.title}
-                date={commitment.date}
-                timeBlocks={commitment.timeBlocks}
-              />
-            ))}
-          </CommitmentContainer>
-
-          <CommitmentContainer
-            title="Upcoming commitments"
-            href="dashboard/calendar"
-          >
-            {upcomingCommitments.map((commitment) => (
-              <CommitmentCard
-                key={commitment.id}
-                title={commitment.title}
-                date={commitment.date}
-                timeBlocks={commitment.timeBlocks}
-              />
-            ))}
-          </CommitmentContainer>
-        </div>
-
+        <DashboardActivityOverview initialDate={format(today, "yyyy-MM-dd")} />
+        
         <TimelineContainer>
           <Timeline events={timelineEvents} />
         </TimelineContainer>

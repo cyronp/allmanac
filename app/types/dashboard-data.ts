@@ -47,11 +47,18 @@ export interface ScheduleTimeBlockData {
   position: number;
 }
 
+export interface ActivityCompletionData {
+  id: string;
+  activityId: string;
+  completedOn: string;
+}
+
 export interface DashboardDatabase {
   schemaVersion: number;
   users: DashboardUser[];
   activities: ActivityData[];
   schedules: ScheduleData[];
+  activityCompletions: ActivityCompletionData[];
 }
 
 export const dashboardMockDatabase =

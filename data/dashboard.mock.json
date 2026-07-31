@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "users": [
     {
       "id": "user-cyronp",
@@ -111,5 +111,40 @@
         }
       ]
     }
+  ],
+  "activityCompletions": [
+    { "id": "completion-work-2026-07-01", "activityId": "work", "completedOn": "2026-07-01" },
+    { "id": "completion-programming-2026-07-01", "activityId": "learn-programming", "completedOn": "2026-07-01" },
+    { "id": "completion-work-2026-07-02", "activityId": "work", "completedOn": "2026-07-02" },
+    { "id": "completion-work-2026-07-03", "activityId": "work", "completedOn": "2026-07-03" },
+    { "id": "completion-girlfriend-2026-07-04", "activityId": "girlfriend-time", "completedOn": "2026-07-04" },
+    { "id": "completion-work-2026-07-06", "activityId": "work", "completedOn": "2026-07-06" },
+    { "id": "completion-programming-2026-07-06", "activityId": "learn-programming", "completedOn": "2026-07-06" },
+    { "id": "completion-work-2026-07-07", "activityId": "work", "completedOn": "2026-07-07" },
+    { "id": "completion-work-2026-07-08", "activityId": "work", "completedOn": "2026-07-08" },
+    { "id": "completion-work-2026-07-10", "activityId": "work", "completedOn": "2026-07-10" },
+    { "id": "completion-programming-2026-07-10", "activityId": "learn-programming", "completedOn": "2026-07-10" },
+    { "id": "completion-girlfriend-2026-07-11", "activityId": "girlfriend-time", "completedOn": "2026-07-11" },
+    { "id": "completion-girlfriend-2026-07-12", "activityId": "girlfriend-time", "completedOn": "2026-07-12" },
+    { "id": "completion-work-2026-07-13", "activityId": "work", "completedOn": "2026-07-13" },
+    { "id": "completion-work-2026-07-14", "activityId": "work", "completedOn": "2026-07-14" },
+    { "id": "completion-programming-2026-07-15", "activityId": "learn-programming", "completedOn": "2026-07-15" },
+    { "id": "completion-work-2026-07-16", "activityId": "work", "completedOn": "2026-07-16" },
+    { "id": "completion-work-2026-07-17", "activityId": "work", "completedOn": "2026-07-17" },
+    { "id": "completion-programming-2026-07-17", "activityId": "learn-programming", "completedOn": "2026-07-17" },
+    { "id": "completion-girlfriend-2026-07-19", "activityId": "girlfriend-time", "completedOn": "2026-07-19" },
+    { "id": "completion-work-2026-07-20", "activityId": "work", "completedOn": "2026-07-20" },
+    { "id": "completion-programming-2026-07-20", "activityId": "learn-programming", "completedOn": "2026-07-20" },
+    { "id": "completion-work-2026-07-21", "activityId": "work", "completedOn": "2026-07-21" },
+    { "id": "completion-work-2026-07-22", "activityId": "work", "completedOn": "2026-07-22" },
+    { "id": "completion-programming-2026-07-22", "activityId": "learn-programming", "completedOn": "2026-07-22" },
+    { "id": "completion-work-2026-07-23", "activityId": "work", "completedOn": "2026-07-23" },
+    { "id": "completion-work-2026-07-24", "activityId": "work", "completedOn": "2026-07-24" },
+    { "id": "completion-girlfriend-2026-07-25", "activityId": "girlfriend-time", "completedOn": "2026-07-25" },
+    { "id": "completion-girlfriend-2026-07-26", "activityId": "girlfriend-time", "completedOn": "2026-07-26" },
+    { "id": "completion-programming-2026-07-27", "activityId": "learn-programming", "completedOn": "2026-07-27" },
+    { "id": "completion-work-2026-07-28", "activityId": "work", "completedOn": "2026-07-28" },
+    { "id": "completion-work-2026-07-29", "activityId": "work", "completedOn": "2026-07-29" },
+    { "id": "completion-programming-2026-07-29", "activityId": "learn-programming", "completedOn": "2026-07-29" }
   ]
 }
