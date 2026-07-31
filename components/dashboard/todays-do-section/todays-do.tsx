@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 import { format, parseISO } from "date-fns";
-import { CheckIcon, Clock3Icon } from "lucide-react";
+import { Clock3Icon } from "lucide-react";
 
 import { dashboardMockDatabase } from "@/app/types/dashboard-data";
 import {
@@ -11,6 +11,13 @@ import {
 } from "@/lib/dashboard-schedule";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface TodaysDoProps {
   initialDate: string;
@@ -63,28 +70,27 @@ export default function TodaysDo({
   );
 
   return (
-    <section
-      className="flex h-full min-h-80 min-w-0 flex-col rounded-xl border border-border/70 bg-accent/20 p-4 shadow-xs backdrop-blur-2xl"
+    <Card
+      className="h-full min-h-80 min-w-0"
       aria-labelledby="todays-do-heading"
     >
-      <header className="mb-4">
-        <h2
+      <CardHeader className="border-b gap-0">
+        <CardTitle
           id="todays-do-heading"
-          className="text-lg font-semibold tracking-tight"
         >
           Today&apos;s Todos
-        </h2>
-        <p className="text-sm text-muted-foreground">
+        </CardTitle>
+        <CardDescription className="font-semibold tracking-tight">
           {format(today, "EEEE, MMMM d")}
-        </p>
-      </header>
+        </CardDescription>
+      </CardHeader>
 
       {items.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center rounded-xl border border-dashed border-border/80 px-6 text-center text-sm text-muted-foreground">
+        <CardContent className="flex flex-1 items-center justify-center text-center text-sm text-muted-foreground">
           Nothing planned for today.
-        </div>
+        </CardContent>
       ) : (
-        <div className="flex flex-col gap-2">
+        <CardContent className="flex flex-col gap-2">
           {items.map((item) => {
             const overrideKey = `${todayKey}:${item.activityId}`;
             const isCompleted =
@@ -143,8 +149,8 @@ export default function TodaysDo({
               </article>
             );
           })}
-        </div>
+        </CardContent>
       )}
-    </section>
+    </Card>
   );
 }

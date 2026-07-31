@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import * as React from "react";
 
@@ -11,11 +12,11 @@ export default function TimelineContainer({ children }: ClockContainerProps) {
       <Heading as="h2" className="text-2xl">
         Timeline
       </Heading>
-      <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl border border-white/5">
-        <div className="flex flex-col p-4 gap-2 overflow-y-auto scrollbar-none min-w-0">
+      <Card>
+        <CardContent className="flex min-w-0 flex-col gap-2 overflow-y-auto scrollbar-none">
           {children}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

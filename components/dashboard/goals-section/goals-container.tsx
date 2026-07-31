@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import * as React from "react";
 
@@ -11,11 +12,11 @@ export default function GoalsContainer({ children }: GoalsContainerProps) {
       <Heading as="h2" className="text-2xl">
         Your Goals
       </Heading>
-      <div className="relative rounded-xl overflow-hidden bg-accent/20 backdrop-blur-2xl border border-white/5">
-        <div className="flex flex-col lg:flex-row p-4 gap-2">
+      <Card>
+        <CardContent className="flex flex-col gap-2 lg:flex-row">
           {children}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

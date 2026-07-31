@@ -13,8 +13,23 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { dashboardMockDatabase } from "@/app/types/dashboard-data";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { getActivityOccurrences } from "@/lib/dashboard-schedule";
 import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -27,8 +42,17 @@ interface ActivityMonthCalendarProps {
 
 interface DayProgress {
   completed: number;
+  goals: DayGoal[];
   percentage: number;
   total: number;
+}
+
+interface DayGoal {
+  color: string;
+  completed: boolean;
+  emoji: string;
+  id: string;
+  title: string;
 }
 
 export default function ActivityMonthCalendar({
@@ -72,6 +96,12 @@ export default function ActivityMonthCalendar({
   }, [visibleMonth]);
 
   const progressByDate = useMemo(() => {
+    const activitiesById = new Map(
+      dashboardMockDatabase.activities.map((activity) => [
+        activity.id,
+        activity,
+      ]),
+    );
     const scheduledByDate = new Map<string, Set<string>>();
     const completedByDate = new Map<string, Set<string>>();
 
@@ -121,12 +151,28 @@ export default function ActivityMonthCalendar({
         const completed = Array.from(completedActivities).filter((activityId) =>
           scheduledActivities.has(activityId),
         ).length;
+        const goals = Array.from(scheduledActivities).flatMap((activityId) => {
+          const activity = activitiesById.get(activityId);
+
+          if (!activity || activity.type !== "goal") return [];
+
+          return [
+            {
+              color: activity.chosenColor,
+              completed: completedActivities.has(activityId),
+              emoji: activity.chosenEmoji,
+              id: activity.id,
+              title: activity.title,
+            } satisfies DayGoal,
+          ];
+        });
         const total = scheduledActivities.size;
 
         return [
           dateKey,
           {
             completed,
+            goals,
             percentage: total === 0 ? 0 : Math.round((completed / total) * 100),
             total,
           } satisfies DayProgress,
@@ -138,19 +184,22 @@ export default function ActivityMonthCalendar({
   const monthLabel = format(visibleMonth, "MMMM, yyyy");
 
   return (
-    <section
-      className="h-full w-full max-w-md rounded-xl border border-border/70 bg-accent/20 p-4 shadow-xs backdrop-blur-2xl"
+    <Card
+      className="h-full min-h-80 w-full min-w-0 max-w-md"
       aria-labelledby="activity-calendar-month"
     >
-      <header className="mb-4 flex items-center justify-between gap-4">
-        <h2
-          id="activity-calendar-month"
-          className="text-lg font-semibold tracking-tight"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {monthLabel}
-        </h2>
+      <CardHeader className="flex flex-row items-center justify-between border-b">
+        <div>
+          <CardTitle>Month activity</CardTitle>
+          <CardDescription
+            id="activity-calendar-month"
+            className="font-semibold tracking-tight"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {monthLabel}
+          </CardDescription>
+        </div>
 
         <div className="flex items-center gap-1">
           <Button
@@ -172,9 +221,9 @@ export default function ActivityMonthCalendar({
             <ChevronRightIcon />
           </Button>
         </div>
-      </header>
+      </CardHeader>
 
-      <div role="grid" aria-label={monthLabel}>
+      <CardContent role="grid" aria-label={monthLabel}>
         <div role="row" className="mb-2 grid grid-cols-7">
           {WEEKDAYS.map((weekday) => (
             <div
@@ -196,6 +245,7 @@ export default function ActivityMonthCalendar({
             const dateKey = format(day, "yyyy-MM-dd");
             const progress = progressByDate.get(dateKey) ?? {
               completed: 0,
+              goals: [],
               percentage: 0,
               total: 0,
             };
@@ -212,63 +262,111 @@ export default function ActivityMonthCalendar({
                 role="gridcell"
                 className="flex justify-center"
               >
-                <button
-                  type="button"
-                  aria-current={isToday ? "date" : undefined}
-                  aria-label={`${format(day, "EEEE, MMMM d, yyyy")}. ${completionLabel}`}
-                  aria-pressed={isSelected}
-                  title={completionLabel}
-                  onClick={() =>
-                    setSelectedDate((selected) =>
-                      selected === dateKey ? null : dateKey,
-                    )
+                <Popover
+                  open={isSelected}
+                  onOpenChange={(open) =>
+                    setSelectedDate(open ? dateKey : null)
                   }
-                  className={cn(
-                    "relative isolate flex size-10 items-center justify-center rounded-full text-sm font-medium outline-none transition-transform focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                    isSelected && "ring-2 ring-foreground/25 ring-offset-1",
-                  )}
                 >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 40 40"
-                    className="absolute inset-0 size-full -rotate-90 overflow-visible"
-                  >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="18"
-                      fill="none"
-                      strokeWidth="2"
-                      className="stroke-border"
-                    />
-                    {progress.total > 0 && (
-                      <circle
-                        cx="20"
-                        cy="20"
-                        r="18"
-                        fill="none"
-                        pathLength="100"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeDasharray={`${progress.percentage} 100`}
-                        className="stroke-primary transition-[stroke-dasharray] duration-300"
-                      />
-                    )}
-                  </svg>
-                  <span
-                    className={cn(
-                      "relative z-10 flex size-8 items-center justify-center rounded-full tabular-nums",
-                      isToday && "bg-primary/15 font-bold text-primary",
-                    )}
-                  >
-                    {format(day, "d")}
-                  </span>
-                </button>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      aria-current={isToday ? "date" : undefined}
+                      aria-label={`${format(day, "EEEE, MMMM d, yyyy")}. ${completionLabel}`}
+                      title={completionLabel}
+                      className={cn(
+                        "relative isolate flex size-10 items-center justify-center rounded-full text-sm font-medium outline-none transition-transform focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                        isSelected && "ring-2 ring-foreground/50 ring-offset-1",
+                      )}
+                    >
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 40 40"
+                        className="absolute inset-0 size-full -rotate-90 overflow-visible"
+                      >
+                        <circle
+                          cx="20"
+                          cy="20"
+                          r="18"
+                          fill="none"
+                          strokeWidth="2"
+                          className="stroke-border"
+                        />
+                        {progress.total > 0 && (
+                          <circle
+                            cx="20"
+                            cy="20"
+                            r="18"
+                            fill="none"
+                            pathLength="100"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeDasharray={`${progress.percentage} 100`}
+                            className="stroke-primary transition-[stroke-dasharray] duration-300"
+                          />
+                        )}
+                      </svg>
+                      <span
+                        className={cn(
+                          "relative z-10 flex size-8 items-center justify-center rounded-full tabular-nums text-muted-foreground",
+                          isToday && "bg-primary font-bold text-muted",
+                        )}
+                      >
+                        {format(day, "d")}
+                      </span>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-72" sideOffset={8} align="start">
+                    <PopoverHeader>
+                      <PopoverTitle>
+                        {format(day, "EEEE, MMMM d, yyyy")}
+                      </PopoverTitle>
+                      <PopoverDescription>{completionLabel}</PopoverDescription>
+                    </PopoverHeader>
+                    <div className="grid gap-1.5 border-t pt-2">
+                      <p className="text-xs font-medium">Goals</p>
+                      {progress.goals.length === 0 ? (
+                        <p className="text-xs text-muted-foreground">
+                          No goals scheduled.
+                        </p>
+                      ) : (
+                        <ul className="grid gap-2">
+                          {progress.goals.map((goal) => (
+                            <li
+                              key={goal.id}
+                              className="flex min-w-0 items-center gap-3 rounded-xl border border-border/70 bg-card p-2"
+                            >
+                              <div
+                                className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/10 text-lg shadow-xs"
+                                style={{ backgroundColor: goal.color }}
+                                aria-hidden="true"
+                              >
+                                {goal.emoji}
+                              </div>
+                              <div className="min-w-0">
+                                <p className={`truncate font-medium ${goal.completed ? "line-through decoration-2": ""}`}>
+                                  {goal.title}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  {goal.completed
+                                    ? "Completed"
+                                    : isToday
+                                      ? "Not done yet"
+                                      : "Not done"}
+                                </p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
             );
           })}
         </div>
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   );
 }

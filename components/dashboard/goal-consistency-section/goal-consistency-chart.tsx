@@ -18,6 +18,13 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import { getActivityOccurrences } from "@/lib/dashboard-schedule";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const chartConfig = {
   percentage: {
@@ -46,10 +53,7 @@ export default function GoalConsistencyChart({
       window.removeEventListener("focus", onDayChange);
     };
   }, []);
-  const getCurrentDay = useCallback(
-    () => format(new Date(), "yyyy-MM-dd"),
-    [],
-  );
+  const getCurrentDay = useCallback(() => format(new Date(), "yyyy-MM-dd"), []);
   const getServerDay = useCallback(() => initialDate, [initialDate]);
   const todayKey = useSyncExternalStore(
     subscribeToCurrentDay,
@@ -127,28 +131,23 @@ export default function GoalConsistencyChart({
   }, [completionOverrides, visibleMonth]);
 
   return (
-    <section
-      className="flex h-full min-h-80 min-w-0 flex-col rounded-xl border border-border/70 bg-accent/20 p-4 shadow-xs backdrop-blur-2xl"
+    <Card
+      className="h-full min-h-80 min-w-0"
       aria-labelledby="goal-consistency-heading"
     >
-      <header className="mb-4">
-        <h2
-          id="goal-consistency-heading"
-          className="text-lg font-semibold tracking-tight"
-        >
-          Goal consistency
-        </h2>
-        <p className="text-sm text-muted-foreground">
+      <CardHeader className="border-b gap-0">
+        <CardTitle id="goal-consistency-heading">Goal consistency</CardTitle>
+        <CardDescription className="font-semibold tracking-tight">
           {format(visibleMonth, "MMMM yyyy")}
-        </p>
-      </header>
+        </CardDescription>
+      </CardHeader>
 
       {goalConsistency.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center rounded-xl border border-dashed border-border/80 px-6 text-center text-sm text-muted-foreground">
+        <CardContent className="flex flex-1 items-center justify-center text-center text-sm text-muted-foreground">
           No active goals scheduled this month.
-        </div>
+        </CardContent>
       ) : (
-        <div className="min-w-0">
+        <CardContent className="min-w-0">
           <div
             className="mb-2 grid items-end gap-2"
             style={{
@@ -157,7 +156,10 @@ export default function GoalConsistencyChart({
           >
             {goalConsistency.map((goal) => (
               <div key={goal.id} className="min-w-0 text-center">
-                <h3 className="truncate text-xs font-semibold" title={goal.title}>
+                <h3
+                  className="truncate text-xs font-semibold"
+                  title={goal.title}
+                >
                   {goal.title}
                 </h3>
                 <p className="text-xs font-medium tabular-nums text-muted-foreground">
@@ -218,8 +220,8 @@ export default function GoalConsistencyChart({
               </Bar>
             </BarChart>
           </ChartContainer>
-        </div>
+        </CardContent>
       )}
-    </section>
+    </Card>
   );
 }

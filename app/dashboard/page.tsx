@@ -1,5 +1,4 @@
 import {
-  addDays,
   endOfYear,
   format,
   parseISO,
@@ -10,8 +9,6 @@ import {
 import { dashboardMockDatabase } from "@/app/types/dashboard-data";
 import GoalsCard from "@/components/dashboard/goals-section/goals-card";
 import GoalsContainer from "@/components/dashboard/goals-section/goals-container";
-import CommitmentCard from "@/components/dashboard/commitment-section/commitment-card";
-import CommitmentContainer from "@/components/dashboard/commitment-section/commitment-container";
 import DashboardActivityOverview from "@/components/dashboard/activity-calendar-section/dashboard-activity-overview";
 import Timeline from "@/components/dashboard/timeline-section/timeline";
 import TimelineContainer from "@/components/dashboard/timeline-section/timeline-container";
@@ -20,7 +17,6 @@ import { Text } from "@/components/ui/text";
 import {
   getActivityOccurrences,
   getActivitySchedules,
-  groupActivityOccurrences,
 } from "@/lib/dashboard-schedule";
 
 interface AppPageProps {
@@ -28,17 +24,6 @@ interface AppPageProps {
 }
 
 const today = startOfDay(new Date());
-const todayCommitments = groupActivityOccurrences(
-  getActivityOccurrences(dashboardMockDatabase, today, today, "commitment"),
-);
-const upcomingCommitments = groupActivityOccurrences(
-  getActivityOccurrences(
-    dashboardMockDatabase,
-    addDays(today, 1),
-    addDays(today, 7),
-    "commitment",
-  ),
-);
 const timelineEvents = getActivityOccurrences(
   dashboardMockDatabase,
   startOfYear(today),
