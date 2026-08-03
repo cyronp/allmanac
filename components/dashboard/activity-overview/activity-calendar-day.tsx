@@ -88,36 +88,36 @@ export default function ActivityCalendarDay({
             <PopoverDescription>{completionLabel}</PopoverDescription>
           </PopoverHeader>
           <div className="grid gap-1.5 border-t pt-2">
-            <p className="text-xs font-medium">Goals</p>
-            {progress.goals.length === 0 ? (
+            <p className="text-xs font-medium">Todos</p>
+            {progress.todos.length === 0 ? (
               <p className="text-xs text-muted-foreground">
-                No goals scheduled.
+                No todos scheduled.
               </p>
             ) : (
               <ul className="grid gap-2">
-                {progress.goals.map((goal) => (
+                {progress.todos.map((todo) => (
                   <li
-                    key={goal.id}
+                    key={todo.id}
                     className="flex min-w-0 items-center gap-3 rounded-xl border border-border/70 bg-card p-2"
                   >
                     <div
                       className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/10 text-lg shadow-xs"
-                      style={{ backgroundColor: goal.color }}
+                      style={{ backgroundColor: todo.color }}
                       aria-hidden="true"
                     >
-                      {goal.emoji}
+                      {todo.emoji}
                     </div>
                     <div className="min-w-0">
                       <p
                         className={cn(
                           "truncate font-medium",
-                          goal.completed && "line-through decoration-2",
+                          todo.completed && "line-through decoration-2",
                         )}
                       >
-                        {goal.title}
+                        {todo.title}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {goal.completed
+                        {todo.completed
                           ? "Completed"
                           : isToday
                             ? "Not done yet"

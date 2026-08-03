@@ -1,6 +1,6 @@
 export type CompletionOverrides = Record<string, boolean>;
 
-export interface DayGoal {
+export interface DayTodo {
   color: string;
   completed: boolean;
   emoji: string;
@@ -10,7 +10,7 @@ export interface DayGoal {
 
 export interface DayProgress {
   completed: number;
-  goals: DayGoal[];
+  todos: DayTodo[];
   percentage: number;
   total: number;
 }

@@ -3,8 +3,8 @@ import { endOfMonth, format, startOfMonth } from "date-fns";
 import type { DashboardDatabase } from "@/app/types/dashboard-data";
 import type {
   CompletionOverrides,
-  DayGoal,
   DayProgress,
+  DayTodo,
   GoalConsistencyDatum,
 } from "@/components/dashboard/activity-overview/activity-overview.types";
 import { getActivityOccurrences } from "@/lib/dashboard-schedule";
@@ -82,10 +82,10 @@ export function buildMonthlyProgress(
       const completed = Array.from(completedActivities).filter((activityId) =>
         scheduledActivities.has(activityId),
       ).length;
-      const goals = Array.from(scheduledActivities).flatMap((activityId) => {
+      const todos = Array.from(scheduledActivities).flatMap((activityId) => {
         const activity = activitiesById.get(activityId);
 
-        if (!activity || activity.type !== "goal") return [];
+        if (!activity) return [];
 
         return [
           {
@@ -94,7 +94,7 @@ export function buildMonthlyProgress(
             emoji: activity.chosenEmoji,
             id: activity.id,
             title: activity.title,
-          } satisfies DayGoal,
+          } satisfies DayTodo,
         ];
       });
       const total = scheduledActivities.size;
@@ -103,7 +103,7 @@ export function buildMonthlyProgress(
         dateKey,
         {
           completed,
-          goals,
+          todos,
           percentage: total === 0 ? 0 : Math.round((completed / total) * 100),
           total,
         } satisfies DayProgress,

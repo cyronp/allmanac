@@ -130,8 +130,8 @@ export default function MonthlyActivityCalendar({
             const dateKey = format(day, "yyyy-MM-dd");
             const progress = progressByDate.get(dateKey) ?? {
               completed: 0,
-              goals: [],
               percentage: 0,
+              todos: [],
               total: 0,
             };
 
