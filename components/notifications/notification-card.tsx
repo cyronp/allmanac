@@ -1,4 +1,3 @@
-import { AlarmClockIcon, LucideIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
 import { cn } from "@/lib/utils";
@@ -8,7 +7,6 @@ interface NotificationCardProps {
   description?: string;
   time?: string;
   isUnread?: boolean;
-  icon?: LucideIcon;
   onMarkAsRead?: () => void;
   isAnimatingOut?: boolean;
 }
@@ -18,7 +16,6 @@ export default function NotificationCard({
   description = "",
   time = "",
   isUnread = true,
-  icon: Icon = AlarmClockIcon,
   onMarkAsRead,
   isAnimatingOut = false,
 }: NotificationCardProps) {
@@ -31,11 +28,6 @@ export default function NotificationCard({
           : "max-h-48 opacity-100 scale-100",
       )}
     >
-      {/* Left Icon */}
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-muted-foreground group-hover:border-primary/20 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
-        <Icon className="size-4" />
-      </div>
-
       {/* Content Area */}
       <div className="flex-1 space-y-1 min-w-0">
         <div className="flex items-start justify-between gap-2">

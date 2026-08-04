@@ -1,4 +1,4 @@
-import type { FormEventHandler } from "react";
+import type { SubmitEventHandler } from "react";
 import { CheckIcon, Trash2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,15 @@ import { cn } from "@/lib/utils";
 
 import { CATEGORY_STYLES, DAYS_OF_WEEK } from "../habits.config";
 import { habitCategories, type HabitDraft } from "../habits.types";
+import { toast } from "sonner";
+
+const HandleSubmit = () => {
+  try {
+    toast.success("Habit created sucessfully!")
+  } catch {
+    toast.error("Opsss, we ocurred a error creating your habit!")
+  }
+}
 
 interface HabitDialogProps {
   open: boolean;
@@ -25,7 +34,7 @@ interface HabitDialogProps {
   onDraftChange: (draft: HabitDraft) => void;
   onToggleDay: (day: number) => void;
   onDelete: () => void;
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onSubmit: SubmitEventHandler<HTMLFormElement>;
 }
 
 export function HabitDialog({
@@ -41,7 +50,7 @@ export function HabitDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={HandleSubmit}>
           <DialogHeader>
             <DialogTitle className="text-lg">
               {editing ? "Edit habit" : "Create a new habit"}
@@ -113,7 +122,7 @@ export function HabitDialog({
                       aria-pressed={selected}
                       onClick={() => onToggleDay(index)}
                       className={cn(
-                        "flex aspect-square cursor-pointer items-center justify-center rounded-lg border text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                        "flex aspect-square cursor-pointer items-center justify-center rounded-lg border text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                         selected
                           ? "border-primary bg-primary text-primary-foreground"
                           : "bg-background text-muted-foreground hover:bg-muted hover:text-foreground",

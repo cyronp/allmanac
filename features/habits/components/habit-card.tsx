@@ -1,8 +1,4 @@
-import {
-  CalendarDaysIcon,
-  Clock3Icon,
-  PencilIcon,
-} from "lucide-react";
+import { CalendarDaysIcon, Clock3Icon, PencilIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -21,7 +17,7 @@ export function HabitCard({ habit, onEdit }: HabitCardProps) {
   const Icon = category.icon;
 
   return (
-    <article className="group flex min-h-52 flex-col rounded-xl border bg-card p-4 shadow-xs transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-sm">
+    <article className="group flex min-h-52 flex-col rounded-xl border bg-card p-4 shadow-xs transition-[border-color] hover:border-foreground/20">
       <div className="flex items-start justify-between gap-3">
         <div
           className={cn(
@@ -60,7 +56,8 @@ export function HabitCard({ habit, onEdit }: HabitCardProps) {
         <div className="flex items-center gap-2">
           <Clock3Icon className="size-4 shrink-0" aria-hidden="true" />
           <span>
-            {formatHabitTime(habit.startTime)} – {formatHabitTime(habit.endTime)}
+            {formatHabitTime(habit.startTime)} –{" "}
+            {formatHabitTime(habit.endTime)}
           </span>
         </div>
       </div>
