@@ -30,11 +30,6 @@ export function HabitsList({ habits, onEdit }: HabitsListProps) {
               ? "Start with a recommendation below."
               : "Your recurring plan at a glance."}
           </CardDescription>
-          <CardAction>
-            <span className="rounded-full border bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground">
-              {habits.length} {habits.length === 1 ? "habit" : "habits"}
-            </span>
-          </CardAction>
         </CardHeader>
 
         {habits.length > 0 ? (
