@@ -1,6 +1,18 @@
 import type { SubmitEventHandler } from "react";
-import { CheckIcon, Trash2Icon } from "lucide-react";
+import { CheckIcon, Trash2Icon, TriangleAlertIcon } from "lucide-react";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,15 +28,6 @@ import { cn } from "@/lib/utils";
 
 import { CATEGORY_STYLES, DAYS_OF_WEEK } from "../habits.config";
 import { habitCategories, type HabitDraft } from "../habits.types";
-import { toast } from "sonner";
-
-const HandleSubmit = () => {
-  try {
-    toast.success("Habit created sucessfully!")
-  } catch {
-    toast.error("Opsss, we ocurred a error creating your habit!")
-  }
-}
 
 interface HabitDialogProps {
   open: boolean;
@@ -50,7 +53,7 @@ export function HabitDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
-        <form onSubmit={HandleSubmit}>
+        <form onSubmit={onSubmit}>
           <DialogHeader>
             <DialogTitle className="text-lg">
               {editing ? "Edit habit" : "Create a new habit"}
@@ -169,23 +172,39 @@ export function HabitDialog({
             </div>
           </div>
 
-          <DialogFooter className="items-center sm:justify-between">
-            {editing ? (
-              <Button type="button" variant="destructive" onClick={onDelete}>
-                <Trash2Icon data-icon="inline-start" />
-                Delete
-              </Button>
-            ) : (
-              <span />
-            )}
-            <div className="flex flex-col-reverse gap-2 sm:flex-row">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-              >
-                Cancel
-              </Button>
+          <DialogFooter className="items-center">
+            <div className="flex flex-row gap-2">
+              {editing && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button type="button" variant="destructive">
+                      <Trash2Icon data-icon="inline-start" />
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogMedia className="bg-destructive/10 text-destructive">
+                        <TriangleAlertIcon />
+                      </AlertDialogMedia>
+                      <AlertDialogTitle>Delete this habit?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. &quot;{draft.name}&quot;
+                        will be permanently deleted.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        variant="destructive"
+                        onClick={onDelete}
+                      >
+                        Delete habit
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
               <Button
                 type="submit"
                 disabled={!draft.name.trim() || draft.days.length === 0}

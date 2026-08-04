@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { PlusIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 
@@ -46,30 +47,45 @@ export function HabitsPage() {
     event.preventDefault();
     if (!draft.name.trim() || draft.days.length === 0) return;
 
-    if (editingId) {
-      updateHabits((current) =>
-        current.map((habit) =>
-          habit.id === editingId
-            ? {
-                ...habit,
-                ...copyHabitDraft(draft),
-                name: draft.name.trim(),
-              }
-            : habit,
-        ),
-      );
-    } else {
-      updateHabits((current) => [
-        ...current,
-        {
-          ...copyHabitDraft(draft),
-          id: `${Date.now()}-${draft.name.toLowerCase().replaceAll(" ", "-")}`,
-          name: draft.name.trim(),
-        },
-      ]);
-    }
+    const isEditing = editingId !== null;
 
-    setDialogOpen(false);
+    try {
+      if (editingId) {
+        updateHabits((current) =>
+          current.map((habit) =>
+            habit.id === editingId
+              ? {
+                  ...habit,
+                  ...copyHabitDraft(draft),
+                  name: draft.name.trim(),
+                }
+              : habit,
+          ),
+        );
+      } else {
+        updateHabits((current) => [
+          ...current,
+          {
+            ...copyHabitDraft(draft),
+            id: `${Date.now()}-${draft.name.toLowerCase().replaceAll(" ", "-")}`,
+            name: draft.name.trim(),
+          },
+        ]);
+      }
+
+      setDialogOpen(false);
+      toast.success(
+        isEditing
+          ? "Habit updated successfully."
+          : "Habit created successfully.",
+      );
+    } catch {
+      toast.error(
+        isEditing
+          ? "Something went wrong while updating the habit."
+          : "Something went wrong while creating the habit.",
+      );
+    }
   }
 
   function deleteHabit() {

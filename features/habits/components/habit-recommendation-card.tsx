@@ -21,7 +21,7 @@ export function HabitRecommendationCard({
     <button
       type="button"
       onClick={onAdd}
-      className="group flex min-h-32 cursor-pointer flex-col items-start rounded-xl border bg-card p-4 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-sm focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      className="group flex min-h-32 cursor-pointer flex-col items-start rounded-xl border bg-card p-4 text-left shadow-xs transition-all hover:border-primary/60 hover:shadow-sm focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
       <div className="flex w-full items-start justify-between gap-3">
         <span
