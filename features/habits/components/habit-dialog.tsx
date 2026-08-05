@@ -125,13 +125,13 @@ export function HabitDialog({
                       aria-pressed={selected}
                       onClick={() => onToggleDay(index)}
                       className={cn(
-                        "flex aspect-square cursor-pointer items-center justify-center rounded-lg border text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                        "flex aspect-square text-sm cursor-pointer items-center justify-center rounded-lg border lg:text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                         selected
                           ? "border-primary bg-primary text-primary-foreground"
                           : "bg-background text-muted-foreground hover:bg-muted hover:text-foreground",
                       )}
                     >
-                      {day.slice(0, 1)}
+                      {day}
                       <span className="sr-only">{day}</span>
                     </button>
                   );

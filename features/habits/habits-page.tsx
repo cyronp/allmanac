@@ -98,7 +98,7 @@ export function HabitsPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-9 pb-6">
+    <div className="flex w-full flex-col gap-9 pb-6">
       <header className="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">
         <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           Your habits

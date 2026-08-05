@@ -116,15 +116,12 @@ export function GoalsPage({ today }: GoalsPageProps) {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 pb-6">
+    <div className="flex w-full flex-col gap-6 pb-6">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-heading text-3xl font-bold tracking-tight">
+          <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
             Your goals
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Create goals and keep their status up to date.
-          </p>
         </div>
         <Button size="lg" onClick={openCreate}>
           <PlusIcon data-icon="inline-start" />
