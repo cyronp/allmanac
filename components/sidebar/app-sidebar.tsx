@@ -3,9 +3,10 @@
 import {
   CalendarIcon,
   HouseIcon,
+  NotebookTabsIcon,
   SquareDashed,
   TrophyIcon,
-  TreeDeciduousIcon
+  TreeDeciduousIcon,
 } from "lucide-react";
 import {
   Sidebar,
@@ -27,6 +28,11 @@ import Link from "next/link";
 
 const navItems = [
   { title: "Dashboard", icon: HouseIcon, href: "/dashboard" },
+  {
+    title: "Bullet Journal",
+    icon: NotebookTabsIcon,
+    href: "/dashboard/journal",
+  },
   { title: "Calendar", icon: CalendarIcon, href: "/dashboard/calendar" },
   { title: "Your Habits", icon: TreeDeciduousIcon, href: "/dashboard/habits" },
   { title: "Your Goals", icon: TrophyIcon, href: "/dashboard/goals" },
