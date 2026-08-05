@@ -175,6 +175,71 @@
   }
 }
 
+/* Compact, token-driven treatment for the goal picker. */
+.notion-emoji-picker.EmojiPickerReact {
+  font-family: var(--font-geist-sans), sans-serif;
+  box-shadow: none;
+}
+
+.notion-emoji-picker .epr-search {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  box-shadow: none;
+}
+
+.notion-emoji-picker .epr-category-nav {
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 4px 10px 8px;
+}
+
+.notion-emoji-picker .epr-cat-btn {
+  border-radius: var(--radius-md);
+  opacity: 0.62;
+  transition:
+    background-color 120ms ease,
+    opacity 120ms ease;
+}
+
+.notion-emoji-picker .epr-cat-btn:hover,
+.notion-emoji-picker .epr-cat-btn.epr-active {
+  background-color: var(--accent);
+  opacity: 1;
+}
+
+.notion-emoji-picker .epr-cat-btn:focus::before {
+  inset: 0;
+  border-color: var(--ring);
+  border-radius: var(--radius-md);
+}
+
+.notion-emoji-picker .epr-emoji-category-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(8px);
+}
+
+.notion-emoji-picker .epr-emoji {
+  border-radius: var(--radius-md);
+}
+
+.notion-emoji-picker .epr-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notion-emoji-picker .epr-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.notion-emoji-picker .epr-body::-webkit-scrollbar-thumb {
+  border-width: 1px;
+}
+
 
 @keyframes cycling-blur-up-out {
   from {

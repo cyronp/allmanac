@@ -163,7 +163,7 @@ export function GoalDialog({
 
               <div className="grid gap-2">
                 <Label htmlFor="goal-background">Background color</Label>
-                <div className="flex h-8 items-center gap-3">
+                <div className="flex h-8 items-center gap-2">
                   <input
                     id="goal-background"
                     type="color"
@@ -171,9 +171,9 @@ export function GoalDialog({
                     onChange={(event) =>
                       onDraftChange({ ...draft, color: event.target.value })
                     }
-                    className="h-8 w-12 cursor-pointer rounded-lg border bg-transparent p-0.5"
+                    className="h-8 w-12 cursor-pointer rounded-lg"
                   />
-                  <code className="text-xs uppercase text-muted-foreground">
+                  <code className="text-sm uppercase text-muted-foreground">
                     {draft.color}
                   </code>
                 </div>
