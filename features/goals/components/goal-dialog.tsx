@@ -1,4 +1,5 @@
 import type { SubmitEventHandler } from "react";
+import { isValid, parseISO } from "date-fns";
 import { Trash2Icon, TriangleAlertIcon } from "lucide-react";
 
 import {
@@ -27,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 import type { GoalDraft } from "../goals.types";
+import { GoalDatePicker } from "./goal-date-picker";
 import { GoalEmojiPicker } from "./goal-emoji-picker";
 
 interface GoalDialogProps {
@@ -49,6 +51,8 @@ export function GoalDialog({
   onSubmit,
 }: GoalDialogProps) {
   const datesAreValid = !draft.endsOn || draft.endsOn >= draft.startsOn;
+  const startDate = parseISO(draft.startsOn);
+  const minimumDeadline = isValid(startDate) ? startDate : undefined;
   const canSubmit = Boolean(
     draft.title.trim() &&
       draft.emoji.trim() &&
@@ -102,13 +106,13 @@ export function GoalDialog({
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="goal-start">Start date</Label>
-                <Input
+                <GoalDatePicker
                   id="goal-start"
-                  type="date"
                   value={draft.startsOn}
-                  onChange={(event) =>
-                    onDraftChange({ ...draft, startsOn: event.target.value })
-                  }
+                  placeholder="Select start date"
+                  onChange={(startsOn) => {
+                    if (startsOn) onDraftChange({ ...draft, startsOn });
+                  }}
                   required
                 />
               </div>
@@ -119,18 +123,16 @@ export function GoalDialog({
                     (optional)
                   </span>
                 </Label>
-                <Input
+                <GoalDatePicker
                   id="goal-deadline"
-                  type="date"
-                  min={draft.startsOn}
-                  value={draft.endsOn ?? ""}
-                  onChange={(event) =>
-                    onDraftChange({
-                      ...draft,
-                      endsOn: event.target.value || null,
-                    })
+                  value={draft.endsOn}
+                  placeholder="Select deadline"
+                  minimumDate={minimumDeadline}
+                  invalid={!datesAreValid}
+                  clearable
+                  onChange={(endsOn) =>
+                    onDraftChange({ ...draft, endsOn })
                   }
-                  aria-invalid={!datesAreValid}
                 />
               </div>
             </div>
