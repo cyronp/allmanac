@@ -55,11 +55,9 @@ function getDayTone(day: JournalCalendarDay, today: string) {
 function TrackerLabel({
   icon,
   label,
-  detail,
 }: {
   icon: React.ReactNode;
   label: string;
-  detail?: string;
 }) {
   return (
     <div className="sticky left-0 z-10 flex h-13 min-w-0 items-center gap-2.5 border-r bg-card/95 px-3 backdrop-blur-sm">
@@ -96,7 +94,7 @@ export function MonthlyTracker({
     minWidth: `calc(var(--journal-label-width) + ${64 + days.length * 38}px)`,
   };
   const trackerHeight =
-    178 + 52 * Math.max(habits.length, 1) + 52 * Math.max(goals.length, 1);
+    166 + 52 * Math.max(habits.length, 1) + 52 * Math.max(goals.length, 1);
 
   return (
     <Card className="relative gap-0 overflow-hidden py-0">
@@ -138,8 +136,8 @@ export function MonthlyTracker({
             className="grid border-b bg-card/65 backdrop-blur-sm"
             style={gridStyle}
           >
-            <div className="sticky left-0 z-10 flex h-16 items-center border-r bg-card/95 px-3 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
-              Practice
+            <div className="sticky left-0 z-10 flex h-14 items-center border-r bg-card/95 px-3 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+              Days
             </div>
             {days.map((day) => (
               <button
@@ -150,11 +148,11 @@ export function MonthlyTracker({
                 aria-label={`Edit ${day.dateKey}`}
                 aria-current={day.dateKey === today ? "date" : undefined}
                 className={cn(
-                  "flex h-16 cursor-pointer flex-col items-center justify-center border-r text-[10px] text-muted-foreground outline-none hover:bg-primary/10 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-not-allowed",
+                  "flex h-14 cursor-pointer flex-col items-center justify-center border-r text-xs text-muted-foreground outline-none hover:bg-primary/10 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-not-allowed",
                   getDayTone(day, today),
                 )}
               >
-                <span className="mb-0.5 uppercase">
+                <span className="uppercase">
                   {day.date.toLocaleDateString("en", { weekday: "narrow" })}
                 </span>
                 <span
@@ -168,7 +166,7 @@ export function MonthlyTracker({
                 </span>
               </button>
             ))}
-            <div className="flex h-16 items-center justify-center border-l bg-card/80 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+            <div className="flex h-12 items-center justify-center border-l bg-card/80 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
               Total
             </div>
           </div>
@@ -178,7 +176,6 @@ export function MonthlyTracker({
             <TrackerLabel
               icon={<MoonStarIcon className="size-3.5" />}
               label="Sleep time"
-              detail="hours"
             />
             {days.map((day) => {
               const hours = getSleepHours(entries[day.dateKey]);
@@ -220,7 +217,6 @@ export function MonthlyTracker({
             <TrackerLabel
               icon={<SmileIcon className="size-3.5" />}
               label="Your Mood"
-              detail="daily feeling"
             />
             {days.map((day) => {
               const mood = getMoodOption(entries[day.dateKey]?.mood);
@@ -259,7 +255,6 @@ export function MonthlyTracker({
                 <CompletionRow
                   key={habit.id}
                   label={habit.name}
-                  detail={category.label}
                   icon={<CategoryIcon className="size-3.5" />}
                   kind="habit"
                   itemId={habit.id}
@@ -281,7 +276,6 @@ export function MonthlyTracker({
               <CompletionRow
                 key={goal.id}
                 label={goal.title}
-                detail="Goal"
                 icon={
                   <span className="text-sm leading-none" aria-hidden="true">
                     {goal.emoji || <TargetIcon className="size-3.5" />}
@@ -308,7 +302,6 @@ export function MonthlyTracker({
 
 function CompletionRow({
   label,
-  detail,
   icon,
   kind,
   itemId,
@@ -320,7 +313,6 @@ function CompletionRow({
   onToggle,
 }: {
   label: string;
-  detail: string;
   icon: React.ReactNode;
   kind: CompletionKind;
   itemId: string;
@@ -346,7 +338,7 @@ function CompletionRow({
 
   return (
     <div role="row" className="grid border-b last:border-b-0" style={gridStyle}>
-      <TrackerLabel icon={icon} label={label} detail={detail} />
+      <TrackerLabel icon={icon} label={label} />
       {days.map((day) => {
         const scheduled = isScheduled(day);
         const completed = Boolean(

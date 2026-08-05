@@ -71,7 +71,7 @@ export function JournalCharts({
               Daily completion rate for {monthLabel.toLowerCase()}.
             </CardDescription>
           </div>
-          <div className="mt-2 flex gap-3 text-[10px] font-medium text-muted-foreground">
+          <div className="flex gap-3 text-xs font-medium text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <span className="size-2 rounded-full bg-[#a3e635]" /> Habits
             </span>
@@ -168,7 +168,7 @@ export function JournalCharts({
               See how your nightly rest moves with your daily mood.
             </CardDescription>
           </div>
-          <div className="mt-2 flex gap-3 text-[10px] font-medium text-muted-foreground">
+          <div className="flex gap-3 text-xs font-medium text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <span className="size-2 rounded-full bg-[#818cf8]" /> Sleep hours
             </span>
