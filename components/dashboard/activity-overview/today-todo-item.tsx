@@ -1,4 +1,4 @@
-import { Clock3Icon } from "lucide-react";
+import { Clock3Icon, TargetIcon } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import type { GroupedActivityOccurrence } from "@/lib/dashboard-schedule";
@@ -18,6 +18,8 @@ export default function TodayTodoItem({
   const timeLabel = item.timeBlocks
     .map((timeBlock) => `${timeBlock.startTime} – ${timeBlock.endTime}`)
     .join(" · ");
+
+  const isGoal = item.type === "goal";
 
   return (
     <article
@@ -46,8 +48,12 @@ export default function TodayTodoItem({
           </h3>
         </div>
         <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <Clock3Icon className="size-3.5 shrink-0" aria-hidden="true" />
-          <span className="truncate">{timeLabel}</span>
+          {isGoal ? (
+            <TargetIcon className="size-3.5 shrink-0" aria-hidden="true" />
+          ) : (
+            <Clock3Icon className="size-3.5 shrink-0" aria-hidden="true" />
+          )}
+          <span className="truncate">{isGoal ? "Daily goal" : timeLabel}</span>
         </p>
       </div>
 

@@ -30,6 +30,7 @@ export function buildDashboardPageData(
     database,
     startOfYear(today),
     endOfYear(today),
+    "commitment",
   ).map((occurrence) => ({
     id: occurrence.id,
     title: occurrence.title,

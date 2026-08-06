@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
-import { dashboardMockDatabase } from "@/app/types/dashboard-data";
+import type { DashboardDatabase } from "@/app/types/dashboard-data";
 import ActivityCalendarDay from "@/components/dashboard/activity-overview/activity-calendar-day";
 import type { CompletionOverrides } from "@/components/dashboard/activity-overview/activity-overview.types";
 import { buildMonthlyProgress } from "@/components/dashboard/activity-overview/activity-overview.utils";
@@ -25,6 +25,7 @@ import {
 const WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 interface MonthlyActivityCalendarProps {
+  database: DashboardDatabase;
   todayKey: string;
   monthOffset: number;
   completionOverrides?: CompletionOverrides;
@@ -32,6 +33,7 @@ interface MonthlyActivityCalendarProps {
 }
 
 export default function MonthlyActivityCalendar({
+  database,
   todayKey,
   monthOffset,
   completionOverrides = {},
@@ -57,13 +59,13 @@ export default function MonthlyActivityCalendar({
   const progressByDate = useMemo(
     () =>
       buildMonthlyProgress(
-        dashboardMockDatabase,
+        database,
         days,
         monthStart,
         monthEnd,
         completionOverrides,
       ),
-    [completionOverrides, days, monthEnd, monthStart],
+    [completionOverrides, database, days, monthEnd, monthStart],
   );
 
   const monthLabel = format(visibleMonth, "MMMM, yyyy");

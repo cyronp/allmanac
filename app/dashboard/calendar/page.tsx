@@ -1,11 +1,8 @@
-import { endOfYear, isValid, parseISO, startOfYear } from "date-fns";
+import { endOfYear, format, isValid, parseISO, startOfYear } from "date-fns";
 
 import { dashboardMockDatabase } from "@/app/types/dashboard-data";
-import {
-  ScheduleCalendar,
-  type CalendarEvent,
-} from "@/components/calendar/schedule-calendar";
-import { Heading } from "@/components/ui/heading";
+import { CalendarPageView } from "@/components/calendar/calendar-page-view";
+import type { CalendarEvent } from "@/components/calendar/schedule-calendar";
 import {
   getActivityOccurrences,
   groupActivityOccurrences,
@@ -41,19 +38,11 @@ export default async function CalendarPage({
   }));
 
   return (
-    <div className="relative z-0 min-w-0 w-full">
-      <div className="relative z-10 flex min-w-0 w-full flex-col gap-6">
-        <Heading as="h1" className="text-4xl tracking-tight">
-          Your Calendar
-        </Heading>
-
-        <ScheduleCalendar
-          events={calendarEvents}
-          defaultMonth={selectedDate}
-          defaultSelected={selectedDate}
-          maxEventsPerDay={dashboardMockDatabase.activities.length}
-        />
-      </div>
-    </div>
+    <CalendarPageView
+      events={calendarEvents}
+      initialDate={selectedDate ? format(selectedDate, "yyyy-MM-dd") : undefined}
+      maxEventsPerDay={dashboardMockDatabase.activities.length}
+      today={format(new Date(), "yyyy-MM-dd")}
+    />
   );
 }

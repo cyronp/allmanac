@@ -17,7 +17,7 @@ export default function GoalsSection({ goals }: GoalsSectionProps) {
         Your Goals
       </Heading>
       <Card>
-        <CardContent className="flex flex-col gap-2 lg:flex-row">
+        <CardContent className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {goals.map(({ id, ...goal }) => (
             <GoalCard key={id} {...goal} />
           ))}

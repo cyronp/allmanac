@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { format, parseISO } from "date-fns";
 
-import { dashboardMockDatabase } from "@/app/types/dashboard-data";
+import type { DashboardDatabase } from "@/app/types/dashboard-data";
 import type { CompletionOverrides } from "@/components/dashboard/activity-overview/activity-overview.types";
 import { getCompletionOverrideKey } from "@/components/dashboard/activity-overview/activity-overview.utils";
 import TodayTodoItem from "@/components/dashboard/activity-overview/today-todo-item";
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 
 interface TodayTodosProps {
+  database: DashboardDatabase;
   todayKey: string;
   completionOverrides: CompletionOverrides;
   onCompletionChange: (
@@ -28,6 +29,7 @@ interface TodayTodosProps {
 }
 
 export default function TodayTodos({
+  database,
   todayKey,
   completionOverrides,
   onCompletionChange,
@@ -36,18 +38,18 @@ export default function TodayTodos({
   const items = useMemo(
     () =>
       groupActivityOccurrences(
-        getActivityOccurrences(dashboardMockDatabase, today, today),
+        getActivityOccurrences(database, today, today),
       ),
-    [today],
+    [database, today],
   );
   const completedActivityIds = useMemo(
     () =>
       new Set(
-        dashboardMockDatabase.activityCompletions
+        database.activityCompletions
           .filter((completion) => completion.completedOn === todayKey)
           .map((completion) => completion.activityId),
       ),
-    [todayKey],
+    [database, todayKey],
   );
 
   return (

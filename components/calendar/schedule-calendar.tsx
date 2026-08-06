@@ -6,7 +6,6 @@ import { isSameDay, startOfMonth } from "date-fns";
 import { cn } from "@/lib/utils";
 
 import { ScheduleCalendarGrid } from "./schedule-calendar-grid";
-import { ScheduleCalendarToolbar } from "./schedule-calendar-toolbar";
 import type { CalendarProps } from "./schedule-calendar.types";
 import {
   getCalendarDays,
@@ -118,13 +117,6 @@ export function ScheduleCalendar({
       aria-label="Calendar"
       className={cn("w-full min-w-0", classNames?.root, className)}
     >
-      <ScheduleCalendarToolbar
-        className={classNames?.toolbar}
-        locale={locale}
-        today={today}
-        visibleMonth={visibleMonth}
-        onMonthChange={setVisibleMonth}
-      />
       <ScheduleCalendarGrid
         calendarDays={calendarDays}
         classNames={classNames}

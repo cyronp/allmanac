@@ -1,12 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import {
-  CheckIcon,
-  MoonStarIcon,
-  SmileIcon,
-  TargetIcon,
-} from "lucide-react";
+import { CheckIcon, MoonStarIcon, SmileIcon, TargetIcon } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -15,10 +10,7 @@ import type { Habit } from "@/features/habits/habits.types";
 import type { Goal } from "@/features/goals/goals.types";
 import { cn } from "@/lib/utils";
 
-import type {
-  CompletionKind,
-  JournalEntries,
-} from "../journal.types";
+import type { CompletionKind, JournalEntries } from "../journal.types";
 import {
   formatSleepDuration,
   getMoodOption,
@@ -98,7 +90,6 @@ export function MonthlyTracker({
 
   return (
     <Card className="relative gap-0 overflow-hidden py-0">
-
       <div className="relative border-b bg-card/80 px-4 py-4 backdrop-blur-sm">
         <div className="flex items-center">
           <div className="flex flex-wrap gap-4 text-base font-medium text-muted-foreground">
@@ -167,10 +158,9 @@ export function MonthlyTracker({
               </button>
             ))}
             <div className="flex h-12 items-center justify-center border-l bg-card/80 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-              Total
+              Average
             </div>
           </div>
-
 
           <div role="row" className="grid border-b" style={gridStyle}>
             <TrackerLabel
@@ -192,11 +182,7 @@ export function MonthlyTracker({
                     hours !== null && "text-indigo-500 dark:text-indigo-300",
                   )}
                 >
-                  {hours === null ? (
-                    "·"
-                  ) : (
-                    formatSleepDuration(hours)
-                  )}
+                  {hours === null ? "·" : formatSleepDuration(hours)}
                 </button>
               );
             })}
@@ -233,19 +219,22 @@ export function MonthlyTracker({
                   )}
                 >
                   {mood?.emoji ?? (
-                    <span className="font-mono text-[10px] text-muted-foreground">·</span>
+                    <span className="font-mono text-[10px] text-muted-foreground">
+                      ·
+                    </span>
                   )}
                 </button>
               );
             })}
             <SummaryCell>
-              {days.filter(
-                (day) => day.dateKey <= today && entries[day.dateKey]?.mood,
-              ).length}
+              {
+                days.filter(
+                  (day) => day.dateKey <= today && entries[day.dateKey]?.mood,
+                ).length
+              }
               /{days.filter((day) => day.dateKey <= today).length}
             </SummaryCell>
           </div>
-
 
           {habits.length > 0 ? (
             habits.map((habit) => {
@@ -292,7 +281,10 @@ export function MonthlyTracker({
               />
             ))
           ) : (
-            <EmptyRow label="No active goals this month" gridStyle={gridStyle} />
+            <EmptyRow
+              label="No active goals this month"
+              gridStyle={gridStyle}
+            />
           )}
         </div>
       </ScrollArea>
@@ -369,7 +361,9 @@ function CompletionRow({
                     : "border-foreground/25 bg-background/80 hover:border-primary/70 hover:bg-primary/10",
                 )}
               >
-                {completed && <CheckIcon className="size-4" aria-hidden="true" />}
+                {completed && (
+                  <CheckIcon className="size-4" aria-hidden="true" />
+                )}
               </button>
             ) : (
               <span
@@ -407,7 +401,8 @@ function EmptyRow({
 function average(values: number[]) {
   if (values.length === 0) return null;
   return (
-    Math.round((values.reduce((sum, value) => sum + value, 0) / values.length) * 10) /
-    10
+    Math.round(
+      (values.reduce((sum, value) => sum + value, 0) / values.length) * 10,
+    ) / 10
   );
 }

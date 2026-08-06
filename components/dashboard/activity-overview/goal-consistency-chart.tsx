@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { addMonths, format, parseISO, startOfMonth } from "date-fns";
 
-import { dashboardMockDatabase } from "@/app/types/dashboard-data";
+import type { DashboardDatabase } from "@/app/types/dashboard-data";
 import type { CompletionOverrides } from "@/components/dashboard/activity-overview/activity-overview.types";
 import { buildGoalConsistency } from "@/components/dashboard/activity-overview/activity-overview.utils";
 import GoalConsistencyBars from "@/components/dashboard/activity-overview/goal-consistency-bars";
@@ -14,12 +14,14 @@ import {
 } from "@/components/ui/card";
 
 interface GoalConsistencyChartProps {
+  database: DashboardDatabase;
   todayKey: string;
   monthOffset: number;
   completionOverrides: CompletionOverrides;
 }
 
 export default function GoalConsistencyChart({
+  database,
   todayKey,
   monthOffset,
   completionOverrides,
@@ -31,11 +33,11 @@ export default function GoalConsistencyChart({
   const goalConsistency = useMemo(
     () =>
       buildGoalConsistency(
-        dashboardMockDatabase,
+        database,
         visibleMonth,
         completionOverrides,
       ),
-    [completionOverrides, visibleMonth],
+    [completionOverrides, database, visibleMonth],
   );
 
   return (
