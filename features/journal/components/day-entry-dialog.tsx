@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { format, parseISO } from "date-fns";
-import { MoonStarIcon, SparklesIcon, Trash2Icon } from "lucide-react";
+import { SparklesIcon, Trash2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,14 +13,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
 
 import { MOOD_OPTIONS } from "../journal.data";
 import { copyEntry } from "../journal.store";
 import type { JournalDayEntry } from "../journal.types";
-import { formatSleepDuration, getSleepHours } from "../journal.utils";
+import { MoodIcon } from "./mood-icon";
+import { SleepClockSelector } from "./sleep-clock-selector";
 
 interface DayEntryDialogProps {
   dateKey: string;
@@ -40,7 +40,6 @@ export function DayEntryDialog({
   onClear,
 }: DayEntryDialogProps) {
   const [draft, setDraft] = useState(() => copyEntry(entry));
-  const sleepHours = getSleepHours(draft);
   const hasDailyLog = Boolean(draft.bedtime || draft.wakeTime || draft.mood);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -62,45 +61,14 @@ export function DayEntryDialog({
         </DialogHeader>
 
         <form className="grid gap-5" onSubmit={handleSubmit}>
-          <FieldGroup className="grid gap-3 sm:grid-cols-2">
-            <Field>
-              <FieldLabel htmlFor={`bedtime-${dateKey}`}>Bedtime</FieldLabel>
-              <Input
-                id={`bedtime-${dateKey}`}
-                type="time"
-                value={draft.bedtime}
-                onChange={(event) =>
-                  setDraft((current) => ({
-                    ...current,
-                    bedtime: event.target.value,
-                  }))
-                }
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor={`wake-time-${dateKey}`}>Wake time</FieldLabel>
-              <Input
-                id={`wake-time-${dateKey}`}
-                type="time"
-                value={draft.wakeTime}
-                onChange={(event) =>
-                  setDraft((current) => ({
-                    ...current,
-                    wakeTime: event.target.value,
-                  }))
-                }
-              />
-            </Field>
-          </FieldGroup>
-
-          <div className="flex items-center justify-between rounded-xl border bg-muted/35 px-3 py-2.5">
-            <span className="flex items-center gap-2 text-sm text-muted-foreground">
-              <MoonStarIcon className="size-4" aria-hidden="true" />
-              Total sleep
-            </span>
-            <span className="font-mono text-sm font-semibold tabular-nums">
-              {formatSleepDuration(sleepHours)}
-            </span>
+          <div className="flex justify-center">
+            <SleepClockSelector
+              bedtime={draft.bedtime}
+              wakeTime={draft.wakeTime}
+              onTimeChange={(kind, value) =>
+                setDraft((current) => ({ ...current, [kind]: value }))
+              }
+            />
           </div>
 
           <Field>
@@ -131,9 +99,7 @@ export function DayEntryDialog({
                       selected && option.className,
                     )}
                   >
-                    <span className="text-2xl" aria-hidden="true">
-                      {option.emoji}
-                    </span>
+                    <MoodIcon mood={option.value} className="size-11" />
                     {option.label}
                   </button>
                 );
@@ -159,4 +125,3 @@ export function DayEntryDialog({
     </Dialog>
   );
 }
-

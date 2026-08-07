@@ -8,7 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { ChartNoAxesCombinedIcon, MoonStarIcon } from "lucide-react";
+import { ChartNoAxesCombinedIcon } from "lucide-react";
 
 import {
   Card,
@@ -29,6 +29,7 @@ import type {
   ConsistencyDataPoint,
   WellbeingDataPoint,
 } from "../journal.utils";
+import { MoodIcon } from "./mood-icon";
 
 const consistencyConfig = {
   habits: { label: "Habits", color: "#a3e635" },
@@ -209,14 +210,11 @@ export function JournalCharts({
                   yAxisId="mood"
                   orientation="right"
                   domain={[1, 5]}
-                  ticks={[1, 3, 5]}
-                  tickFormatter={(value) =>
-                    MOOD_OPTIONS.find((option) => option.score === value)
-                      ?.emoji ?? ""
-                  }
+                  ticks={MOOD_OPTIONS.map((option) => option.score)}
+                  tick={<MoodAxisTick />}
                   tickLine={false}
                   axisLine={false}
-                  width={30}
+                  width={34}
                 />
                 <ReferenceLine
                   yAxisId="sleep"
@@ -274,6 +272,30 @@ export function JournalCharts({
         </CardContent>
       </Card>
     </section>
+  );
+}
+
+interface MoodAxisTickProps {
+  x?: number;
+  y?: number;
+  payload?: { value: number };
+}
+
+function MoodAxisTick({ x = 0, y = 0, payload }: MoodAxisTickProps) {
+  const mood = MOOD_OPTIONS.find((option) => option.score === payload?.value);
+  if (!mood) return null;
+
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <MoodIcon
+        mood={mood.value}
+        aria-label={mood.label}
+        height={24}
+        width={24}
+        x={-12}
+        y={-12}
+      />
+    </g>
   );
 }
 

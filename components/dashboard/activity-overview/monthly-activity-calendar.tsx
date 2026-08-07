@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   addMonths,
   eachDayOfInterval,
@@ -8,6 +8,7 @@ import {
   startOfMonth,
 } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import ReactConfetti from "react-confetti";
 
 import type { DashboardDatabase } from "@/app/types/dashboard-data";
 import ActivityCalendarDay from "@/components/dashboard/activity-overview/activity-calendar-day";
@@ -67,6 +68,36 @@ export default function MonthlyActivityCalendar({
       ),
     [completionOverrides, database, days, monthEnd, monthStart],
   );
+  const todayProgress = useMemo(() => {
+    const today = parseISO(todayKey);
+
+    return buildMonthlyProgress(
+      database,
+      [today],
+      today,
+      today,
+      completionOverrides,
+    ).get(todayKey);
+  }, [completionOverrides, database, todayKey]);
+  const isTodayComplete = Boolean(
+    todayProgress &&
+      todayProgress.total > 0 &&
+      todayProgress.completed === todayProgress.total,
+  );
+  const wasTodayComplete = useRef(isTodayComplete);
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  useEffect(() => {
+    if (
+      !wasTodayComplete.current &&
+      isTodayComplete &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setShowConfetti(true);
+    }
+
+    wasTodayComplete.current = isTodayComplete;
+  }, [isTodayComplete]);
 
   const monthLabel = format(visibleMonth, "MMMM, yyyy");
 
@@ -75,6 +106,17 @@ export default function MonthlyActivityCalendar({
       className="h-full min-h-80 w-full min-w-0 max-w-md"
       aria-labelledby="activity-calendar-month"
     >
+      {showConfetti && (
+        <ReactConfetti
+          aria-hidden="true"
+          numberOfPieces={250}
+          onConfettiComplete={() => setShowConfetti(false)}
+          recycle={false}
+          style={{ position: "fixed", zIndex: 50 }}
+          tweenDuration={1_500}
+        />
+      )}
+
       <CardHeader className="flex flex-row items-center justify-between border-b">
         <div>
           <CardTitle>Month activity</CardTitle>

@@ -95,7 +95,7 @@ export function ScheduleCalendarDay({
             aria-label={dateLabel}
             aria-current={isToday ? "date" : undefined}
             className={cn(
-              "flex size-8 items-center justify-center rounded-md text-sm font-medium text-white",
+              "flex size-8 items-center justify-center rounded-md text-sm font-medium",
               isToday && "bg-primary text-primary-foreground",
               isSelected &&
                 !isToday &&

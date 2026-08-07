@@ -29,7 +29,7 @@ export const INITIAL_HABITS: Habit[] = [
 
 export const RECOMMENDED_HABITS: HabitDraft[] = [
   {
-    name: "Focused work",
+    name: "Work",
     category: "work",
     days: [0, 1, 2, 3, 4],
     startTime: "09:00",

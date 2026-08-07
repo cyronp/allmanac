@@ -27,11 +27,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="max-h-full w-full">
-        <TooltipProvider>{children}
-          <Toaster position="top-right"/>
+      <body className="max-h-full w-full ">
+        <TooltipProvider>
+          {children}
+          <Toaster position="top-right" />
         </TooltipProvider>
       </body>
     </html>

@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 import type { GoalDraft } from "../goals.types";
+import { GoalColorPicker } from "./goal-color-picker";
 import { GoalDatePicker } from "./goal-date-picker";
 import { GoalEmojiPicker } from "./goal-emoji-picker";
 
@@ -165,22 +166,17 @@ export function GoalDialog({
 
               <div className="grid gap-2">
                 <Label htmlFor="goal-background">Background color</Label>
-                <div className="flex h-8 items-center gap-2">
-                  <input
-                    id="goal-background"
-                    type="color"
-                    value={draft.color}
-                    onChange={(event) =>
-                      onDraftChange({ ...draft, color: event.target.value })
-                    }
-                    className="h-8 w-12 cursor-pointer rounded-lg"
-                  />
-                  <code className="text-sm uppercase text-muted-foreground">
-                    {draft.color}
-                  </code>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Pick any color for the goal card.
+                <GoalColorPicker
+                  id="goal-background"
+                  value={draft.color}
+                  onChange={(color) => onDraftChange({ ...draft, color })}
+                  describedBy="goal-background-hint"
+                />
+                <p
+                  id="goal-background-hint"
+                  className="text-xs text-muted-foreground"
+                >
+                  Choose a color for the goal card.
                 </p>
               </div>
             </div>

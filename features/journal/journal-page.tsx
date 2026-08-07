@@ -18,6 +18,7 @@ import {
   NotebookPenIcon,
   SmileIcon,
 } from "lucide-react";
+import ReactConfetti from "react-confetti";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -40,6 +41,8 @@ import {
   buildConsistencyData,
   buildJournalStats,
   buildWellbeingData,
+  isGoalActive,
+  isHabitScheduled,
   type JournalCalendarDay,
 } from "./journal.utils";
 
@@ -60,6 +63,7 @@ export function JournalPage({ initialMonth, today }: JournalPageProps) {
     startOfMonth(parseISO(`${initialMonth}-01`)),
   );
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const monthKey = format(visibleMonth, "yyyy-MM");
   const monthLabel = format(visibleMonth, "MMMM yyyy");
@@ -139,9 +143,44 @@ export function JournalPage({ initialMonth, today }: JournalPageProps) {
   ) {
     if (dateKey > today) return;
 
+    const entry = entries[dateKey] ?? EMPTY_JOURNAL_ENTRY;
+    const field =
+      kind === "habit" ? "completedHabitIds" : "completedGoalIds";
+    const isCompleting = !entry[field].includes(itemId);
+
+    if (isCompleting) {
+      const completedHabitIds = new Set(entry.completedHabitIds);
+      const completedGoalIds = new Set(entry.completedGoalIds);
+
+      if (kind === "habit") {
+        completedHabitIds.add(itemId);
+      } else {
+        completedGoalIds.add(itemId);
+      }
+
+      const date = parseISO(dateKey);
+      const scheduledHabits = habits.filter((habit) =>
+        isHabitScheduled(habit, date),
+      );
+      const activeGoals = visibleGoals.filter((goal) =>
+        isGoalActive(goal, dateKey),
+      );
+      const totalItems = scheduledHabits.length + activeGoals.length;
+      const dayIsComplete =
+        totalItems > 0 &&
+        scheduledHabits.every((habit) => completedHabitIds.has(habit.id)) &&
+        activeGoals.every((goal) => completedGoalIds.has(goal.id));
+
+      if (
+        dayIsComplete &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        setShowConfetti(true);
+      }
+    }
+
     updateEntries((current) => {
       const entry = copyEntry(current[dateKey]);
-      const field = kind === "habit" ? "completedHabitIds" : "completedGoalIds";
       const values = entry[field];
       const nextValues = values.includes(itemId)
         ? values.filter((id) => id !== itemId)
@@ -160,6 +199,17 @@ export function JournalPage({ initialMonth, today }: JournalPageProps) {
 
   return (
     <div className="flex w-full min-w-0 flex-col gap-4">
+      {showConfetti && (
+        <ReactConfetti
+          aria-hidden="true"
+          numberOfPieces={250}
+          onConfettiComplete={() => setShowConfetti(false)}
+          recycle={false}
+          style={{ position: "fixed", zIndex: 50 }}
+          tweenDuration={1_500}
+        />
+      )}
+
       <header className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
         <div className="max-w-2xl">
           <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">

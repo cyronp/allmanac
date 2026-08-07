@@ -73,7 +73,7 @@ export default function TimelineEvent({
           <div className="px-4 h-full flex flex-col justify-center gap-0 min-w-0">
             <Text
               as="span"
-              className="text-sm font-semibold truncate leading-tight text-white"
+              className="text-sm font-semibold truncate leading-tight"
             >
               {title}
             </Text>

@@ -7,6 +7,7 @@ import {
   SquareDashed,
   TrophyIcon,
   TreeDeciduousIcon,
+  NotebookPenIcon,
 } from "lucide-react";
 import {
   Sidebar,
@@ -36,6 +37,7 @@ const navItems = [
   { title: "Calendar", icon: CalendarIcon, href: "/dashboard/calendar" },
   { title: "Your Habits", icon: TreeDeciduousIcon, href: "/dashboard/habits" },
   { title: "Your Goals", icon: TrophyIcon, href: "/dashboard/goals" },
+  { title: "Notes", icon: NotebookPenIcon, href: "/dashboard/notes" },
 ];
 
 export default function AppSidebar() {

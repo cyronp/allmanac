@@ -16,7 +16,6 @@ export const EMPTY_JOURNAL_ENTRY: JournalDayEntry = {
 export const MOOD_OPTIONS: Array<{
   value: Mood;
   label: string;
-  emoji: string;
   score: number;
   color: string;
   className: string;
@@ -24,7 +23,6 @@ export const MOOD_OPTIONS: Array<{
   {
     value: "stressed",
     label: "Stressed",
-    emoji: "😣",
     score: 1,
     color: "#fb7185",
     className:
@@ -33,7 +31,6 @@ export const MOOD_OPTIONS: Array<{
   {
     value: "bad",
     label: "Bad",
-    emoji: "🙁",
     score: 2,
     color: "#fb923c",
     className:
@@ -42,7 +39,6 @@ export const MOOD_OPTIONS: Array<{
   {
     value: "meh",
     label: "Meh",
-    emoji: "😐",
     score: 3,
     color: "#facc15",
     className:
@@ -50,8 +46,7 @@ export const MOOD_OPTIONS: Array<{
   },
   {
     value: "good",
-    label: "Good",
-    emoji: "🙂",
+    label: "Happy",
     score: 4,
     color: "#84cc16",
     className:
@@ -59,8 +54,7 @@ export const MOOD_OPTIONS: Array<{
   },
   {
     value: "happy",
-    label: "Happy",
-    emoji: "😄",
+    label: "Very happy",
     score: 5,
     color: "#22c55e",
     className:

@@ -19,6 +19,7 @@ import {
   isHabitScheduled,
   type JournalCalendarDay,
 } from "../journal.utils";
+import { MoodIcon } from "./mood-icon";
 
 interface MonthlyTrackerProps {
   monthLabel: string;
@@ -90,26 +91,6 @@ export function MonthlyTracker({
 
   return (
     <Card className="relative gap-0 overflow-hidden py-0">
-      <div className="relative border-b bg-card/80 px-4 py-4 backdrop-blur-sm">
-        <div className="flex items-center">
-          <div className="flex flex-wrap gap-4 text-base font-medium text-muted-foreground">
-            <span className="flex items-center gap-1">
-              <span className="flex size-5 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <CheckIcon className="size-4" />
-              </span>
-              Done
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="size-5 rounded-lg border border-foreground/25 bg-background" />
-              Planned
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="h-px w-5 rotate-[-35deg] bg-muted-foreground/40" />
-              Rest day
-            </span>
-          </div>
-        </div>
-      </div>
 
       <ScrollArea
         type="always"
@@ -218,7 +199,9 @@ export function MonthlyTracker({
                     getDayTone(day, today),
                   )}
                 >
-                  {mood?.emoji ?? (
+                  {mood ? (
+                    <MoodIcon mood={mood.value} className="size-8" />
+                  ) : (
                     <span className="font-mono text-[10px] text-muted-foreground">
                       ·
                     </span>
