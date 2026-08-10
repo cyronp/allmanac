@@ -10,7 +10,8 @@ const NotificationButton = React.forwardRef<HTMLButtonElement, NotificationButto
   ({ hasNotification, ...props }, ref) => {
     return (
       <Button variant="ghost" size="icon-lg" ref={ref} {...props}>
-        <BellIcon />
+        <BellIcon aria-hidden="true" />
+        <span className="sr-only">Notifications</span>
         {hasNotification && (
           <div className="absolute top-4.5 right-6 h-2 w-2 bg-primary rounded-full" />
         )}

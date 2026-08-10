@@ -27,7 +27,7 @@ import { Text } from "../ui/text";
 import SettingsDialog from "../settings/settings-dialog";
 
 export default function AccountMenu() {
-  const { state } = useSidebar();
+  const { isMobile, state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
   return (
@@ -75,7 +75,12 @@ export default function AccountMenu() {
                 )}
               </SidebarMenuButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="min-w-56" side="right" align="end">
+            <DropdownMenuContent
+              className="min-w-0 w-[calc(100vw-2rem)] max-w-56 md:w-auto md:min-w-56"
+              side={isMobile ? "top" : "right"}
+              align="end"
+              collisionPadding={16}
+            >
               <DropdownMenuLabel className="py-2">Account</DropdownMenuLabel>
               <DropdownMenuGroup>
                 <DropdownMenuItem>

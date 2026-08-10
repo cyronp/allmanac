@@ -2,13 +2,6 @@
 
 import { ReactNode, useState } from "react";
 import {
-  BellOffIcon,
-  FileTextIcon,
-  TargetIcon,
-  SettingsIcon,
-  CheckCheckIcon,
-} from "lucide-react";
-import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
@@ -32,7 +25,6 @@ export default function NotificationMenu({
         "Review and sign the assistant manager contract for John Smith.",
       time: "10m ago",
       isUnread: true,
-      icon: FileTextIcon,
       isAnimatingOut: false,
     },
     {
@@ -41,7 +33,6 @@ export default function NotificationMenu({
       description: "Your team weekly goal has been set to 35 projects.",
       time: "2h ago",
       isUnread: true,
-      icon: TargetIcon,
       isAnimatingOut: false,
     },
     {
@@ -51,7 +42,6 @@ export default function NotificationMenu({
         "Allmanac will be offline for 30 minutes tonight at 12:00 AM UTC.",
       time: "1d ago",
       isUnread: false,
-      icon: SettingsIcon,
       isAnimatingOut: false,
     },
   ]);
@@ -92,30 +82,29 @@ export default function NotificationMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{NotificationsTrigger}</DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-96 p-0 overflow-hidden rounded-xl border border-border bg-popover shadow-md"
+        className="flex w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-xl border border-border bg-popover p-0 shadow-md sm:w-96"
         align="end"
+        collisionPadding={16}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-          <div className="flex items-center gap-2">
-            <Text as="span" className="text-lg font-semibold text-foreground">
-              Notifications
-            </Text>
-          </div>
+        <div className="flex shrink-0 flex-col items-start gap-2 border-b border-border px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+          <Text as="span" className="text-lg font-semibold text-foreground">
+            Notifications
+          </Text>
           {unreadCount > 0 && (
             <Button
               variant="ghost"
-              size="default"
+              size="sm"
               onClick={handleMarkAllAsRead}
-              className="text-sm text-primary hover:text-primary/80 hover:bg-transparent font-medium"
+              className="h-auto px-0 py-1 text-sm font-medium text-primary hover:bg-transparent hover:text-primary/80 sm:px-2"
             >
-              <CheckCheckIcon/> Mark all as read
+              Mark all as read
             </Button>
           )}
         </div>
 
         {/* Scrollable List */}
-        <div className="max-h-96 overflow-y-auto p-2 space-y-1.5 scrollbar-thin">
+        <div className="min-h-0 max-h-96 flex-1 space-y-1.5 overflow-y-auto p-1.5 scrollbar-thin sm:p-2">
           {visibleNotifications.length > 0 ? (
             visibleNotifications.map((n) => (
               <NotificationCard
@@ -124,16 +113,12 @@ export default function NotificationMenu({
                 description={n.description}
                 time={n.time}
                 isUnread={n.isUnread}
-                icon={n.icon}
                 isAnimatingOut={n.isAnimatingOut}
                 onMarkAsRead={() => handleMarkAsRead(n.id)}
               />
             ))
           ) : (
             <div className="flex flex-col items-center justify-center p-6 text-center select-none">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full text-muted-foreground">
-                <BellOffIcon size={32} />
-              </div>
               <Text as="p" className="text-sm font-medium text-foreground">
                 Great Job!
               </Text>
@@ -145,7 +130,7 @@ export default function NotificationMenu({
         </div>
 
         {/* Footer */}
-        <div className="border-t border-border p-2">
+        <div className="shrink-0 border-t border-border p-2">
           <Button
             variant="ghost"
             size="sm"
