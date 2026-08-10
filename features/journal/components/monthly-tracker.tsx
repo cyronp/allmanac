@@ -1,9 +1,10 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { CheckIcon, MoonStarIcon, SmileIcon, TargetIcon } from "lucide-react";
+import { MoonStarIcon, SmileIcon, TargetIcon } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CATEGORY_STYLES } from "@/features/habits/habits.config";
 import type { Habit } from "@/features/habits/habits.types";
@@ -331,23 +332,15 @@ function CompletionRow({
             )}
           >
             {scheduled ? (
-              <button
-                type="button"
+              <Checkbox
                 disabled={future}
-                aria-pressed={completed}
                 aria-label={`${completed ? "Unmark" : "Mark"} ${label} on ${day.dateKey}`}
-                onClick={() => onToggle(day.dateKey, kind, itemId)}
-                className={cn(
-                  "flex size-6 cursor-pointer items-center justify-center rounded-md border outline-none transition-all hover:scale-110 focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed",
-                  completed
-                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-foreground/25 bg-background/80 hover:border-primary/70 hover:bg-primary/10",
-                )}
-              >
-                {completed && (
-                  <CheckIcon className="size-4" aria-hidden="true" />
-                )}
-              </button>
+                checked={completed}
+                onCheckedChange={() =>
+                  onToggle(day.dateKey, kind, itemId)
+                }
+                className="size-6"
+              />
             ) : (
               <span
                 className="h-px w-3 rotate-[-35deg] bg-muted-foreground/25"

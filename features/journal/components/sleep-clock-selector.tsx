@@ -14,11 +14,12 @@ import { formatSleepDuration, getSleepHours } from "../journal.utils";
 
 const MINUTES_PER_DAY = 24 * 60;
 const MINUTE_STEP = 5;
+const CLOCK_DIAMETER = 224;
 const CLOCK_CENTER = 112;
 const CLOCK_RADIUS = 100;
 const CLOCK_CIRCUMFERENCE = 2 * Math.PI * CLOCK_RADIUS;
 const FACE_TICK_RADIUS = 80;
-const FACE_NUMBER_RADIUS = 69;
+const FACE_NUMBER_RADIUS = 76;
 
 type TimeKind = "bedtime" | "wakeTime";
 
@@ -57,21 +58,23 @@ function formatTime(minutes: number) {
 
 function getHandleStyle(minutes: number): CSSProperties {
   const angle = (minutes / MINUTES_PER_DAY) * Math.PI * 2;
-  const x = Math.sin(angle) * CLOCK_RADIUS;
-  const y = -Math.cos(angle) * CLOCK_RADIUS;
+  const x = (Math.sin(angle) * CLOCK_RADIUS * 100) / CLOCK_DIAMETER;
+  const y = (-Math.cos(angle) * CLOCK_RADIUS * 100) / CLOCK_DIAMETER;
 
   return {
-    left: `calc(50% + ${x}px)`,
-    top: `calc(50% + ${y}px)`,
+    left: `calc(50% + ${x}%)`,
+    top: `calc(50% + ${y}%)`,
   };
 }
 
 function getFacePositionStyle(index: number, radius: number): CSSProperties {
   const angle = (index / 12) * Math.PI * 2;
+  const x = (Math.sin(angle) * radius * 100) / CLOCK_DIAMETER;
+  const y = (-Math.cos(angle) * radius * 100) / CLOCK_DIAMETER;
 
   return {
-    left: `calc(50% + ${Math.sin(angle) * radius}px)`,
-    top: `calc(50% - ${Math.cos(angle) * radius}px)`,
+    left: `calc(50% + ${x}%)`,
+    top: `calc(50% + ${y}%)`,
   };
 }
 
@@ -85,11 +88,18 @@ export function SleepClockSelector({
   const bedtimeMinutes = parseTime(bedtime, 0);
   const wakeTimeMinutes = parseTime(wakeTime, 4 * 60 + 40);
   const sleepHours = getSleepHours({ bedtime, wakeTime });
+  const hasSelectedTime = Boolean(bedtime || wakeTime);
   const totalSleep = formatSleepDuration(sleepHours);
   const totalSleepLabel =
     totalSleep === "—" ? "00:00" : totalSleep.padStart(5, "0");
+  const previewArcMinutes =
+    (wakeTimeMinutes - bedtimeMinutes + MINUTES_PER_DAY) % MINUTES_PER_DAY;
   const sleepArcMinutes =
-    sleepHours === null ? 0 : Math.round(sleepHours * 60);
+    sleepHours === null
+      ? hasSelectedTime
+        ? previewArcMinutes
+        : 0
+      : Math.round(sleepHours * 60);
   const sleepArcLength =
     (sleepArcMinutes / MINUTES_PER_DAY) * CLOCK_CIRCUMFERENCE;
   const sleepArcRotation =
@@ -189,13 +199,13 @@ export function SleepClockSelector({
     <div
       ref={clockRef}
       className={cn(
-        "relative isolate flex size-56 shrink-0 touch-none items-center justify-center rounded-full bg-gray-300 select-none shadow-[inset_0_0_12px_rgba(0,0,0,0.3)] dark:bg-gray-700",
+        "relative isolate flex size-[min(18rem,calc(100vw-4rem))] shrink-0 items-center justify-center rounded-full bg-gray-300 select-none shadow-[inset_0_0_12px_rgba(0,0,0,0.3)] sm:size-80 dark:bg-gray-700",
         className,
       )}
       role="group"
       aria-label="Sleep schedule clock selector"
     >
-      {sleepHours !== null && (
+      {(sleepHours !== null || sleepArcMinutes > 0) && (
         <svg
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 size-full text-primary"
@@ -218,26 +228,25 @@ export function SleepClockSelector({
         </svg>
       )}
 
-      <div className="relative flex size-44 flex-col items-center justify-center gap-1 rounded-full bg-background p-2.5 shadow-[0_0_6px_rgba(0,0,0,0.25)]">
+      <div className="relative flex size-[78.571%] flex-col items-center justify-center gap-1 rounded-full bg-background p-3 shadow-[0_0_6px_rgba(0,0,0,0.25)]">
         <div aria-hidden="true" className="absolute inset-0 rounded-full">
-          {Array.from({ length: 12 }, (_, index) => (
-            <span
-              key={index}
-              className={cn(
-                "absolute h-1.5 w-px bg-muted-foreground/35",
-                index % 3 === 0 && "h-2.5 w-0.5 bg-foreground/45",
-              )}
-              style={{
-                ...getFacePositionStyle(index, FACE_TICK_RADIUS),
-                transform: `translate(-50%, -50%) rotate(${index * 30}deg)`,
-              }}
-            />
-          ))}
+          {Array.from({ length: 12 }, (_, index) => index)
+            .filter((index) => index % 3 !== 0)
+            .map((index) => (
+              <span
+                key={index}
+                className="absolute h-1.5 w-0.5 bg-muted-foreground/35"
+                style={{
+                  ...getFacePositionStyle(index, FACE_TICK_RADIUS),
+                  transform: `translate(-50%, -50%) rotate(${index * 30}deg)`,
+                }}
+              />
+            ))}
 
           {["12", "3", "6", "9"].map((label, index) => (
             <span
               key={label}
-              className="absolute -translate-x-1/2 -translate-y-1/2 text-[10px] leading-none font-semibold text-muted-foreground"
+              className="absolute -translate-x-1/2 -translate-y-1/2 text-base leading-none font-bold text-muted-foreground tabular-nums sm:text-lg"
               style={getFacePositionStyle(index * 3, FACE_NUMBER_RADIUS)}
             >
               {label}
@@ -246,13 +255,13 @@ export function SleepClockSelector({
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center gap-1">
-          <p className="text-sm leading-[normal] font-semibold whitespace-nowrap">
+          <p className="text-[15px] leading-[normal] font-semibold whitespace-nowrap sm:text-base">
             Total sleep: {totalSleepLabel}
           </p>
-          <p className="text-xs leading-[normal] font-medium text-muted-foreground whitespace-nowrap">
+          <p className="text-[13px] leading-[normal] font-medium text-muted-foreground whitespace-nowrap sm:text-sm">
             Sleep hour: {bedtime || "00:00"}
           </p>
-          <p className="text-xs leading-[normal] font-medium text-muted-foreground whitespace-nowrap">
+          <p className="text-[13px] leading-[normal] font-medium text-muted-foreground whitespace-nowrap sm:text-sm">
             Awake hour: {wakeTime || "00:00"}
           </p>
         </div>
@@ -267,7 +276,7 @@ export function SleepClockSelector({
             type="button"
             role="slider"
             className={cn(
-              "absolute z-10 flex size-6 -translate-x-1/2 -translate-y-1/2 cursor-grab items-center justify-center rounded-full bg-background shadow-[inset_0_0_2px_rgba(0,0,0,0.25),0_1px_3px_rgba(0,0,0,0.18)] outline-none active:cursor-grabbing active:scale-110 active:shadow-[inset_0_0_2px_rgba(0,0,0,0.25),0_2px_6px_rgba(0,0,0,0.28)] active:ring-4 active:ring-primary/20 focus-visible:ring-3 focus-visible:ring-ring/50",
+              "absolute z-10 flex size-12 -translate-x-1/2 -translate-y-1/2 touch-none cursor-grab items-center justify-center rounded-full bg-background shadow-[inset_0_0_0_2px_rgba(0,0,0,0.12),inset_0_-4px_8px_rgba(0,0,0,0.2)] outline-none transition-[scale,box-shadow] active:cursor-grabbing active:scale-110 active:shadow-[inset_0_0_0_2px_rgba(0,0,0,0.16),inset_0_-5px_10px_rgba(0,0,0,0.25)] active:ring-4 active:ring-primary/20 focus-visible:ring-3 focus-visible:ring-ring/50",
               handle.iconClassName,
             )}
             style={getHandleStyle(handle.minutes)}
@@ -282,7 +291,7 @@ export function SleepClockSelector({
             onPointerDown={(event) => handlePointerDown(handle.kind, event)}
             onPointerMove={(event) => handlePointerMove(handle.kind, event)}
           >
-            <Icon className="size-4" aria-hidden="true" />
+            <Icon className="size-6" aria-hidden="true" />
           </button>
         );
       })}
