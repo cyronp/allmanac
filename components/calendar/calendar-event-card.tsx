@@ -6,6 +6,7 @@ import type { CalendarEvent } from "./schedule-calendar.types";
 
 interface CalendarEventCardProps {
   event: CalendarEvent;
+  onClick: () => void;
 }
 
 function getEventTime(event: CalendarEvent) {
@@ -22,15 +23,17 @@ function getEventTime(event: CalendarEvent) {
   return event.startTime ?? event.endTime ?? event.time;
 }
 
-export function CalendarEventCard({ event }: CalendarEventCardProps) {
+export function CalendarEventCard({ event, onClick }: CalendarEventCardProps) {
   const eventTime = getEventTime(event);
   const eventStyle = {
     "--event-color": event.choosen_color,
   } as CSSProperties;
 
   return (
-    <article
-      className="flex cursor-pointer items-center gap-3 rounded-lg border bg-transparent p-3 transition-colors hover:bg-(--event-color)/20"
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full cursor-pointer items-center gap-3 rounded-lg border bg-transparent p-3 text-left outline-none transition-colors hover:bg-(--event-color)/20 focus-visible:ring-2 focus-visible:ring-ring"
       style={eventStyle}
     >
       {event.choosen_emoji && (
@@ -47,6 +50,6 @@ export function CalendarEventCard({ event }: CalendarEventCardProps) {
           <p className="text-xs text-muted-foreground">{eventTime}</p>
         )}
       </div>
-    </article>
+    </button>
   );
 }

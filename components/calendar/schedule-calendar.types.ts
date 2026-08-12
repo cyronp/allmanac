@@ -3,7 +3,10 @@ import type { Day } from "date-fns";
 
 export interface CalendarEvent {
   id: string;
+  activityId?: string;
+  activityType?: "commitment" | "goal";
   title: string;
+  description?: string;
   date: Date | string;
   time?: string;
   startTime?: string;

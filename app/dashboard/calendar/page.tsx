@@ -30,7 +30,10 @@ export default async function CalendarPage({
     ),
   ).map((occurrence) => ({
     id: occurrence.id,
+    activityId: occurrence.activityId,
+    activityType: occurrence.type,
     title: occurrence.title,
+    description: occurrence.description,
     date: occurrence.isoDate,
     timeBlocks: occurrence.timeBlocks,
     choosen_emoji: occurrence.chosenEmoji,

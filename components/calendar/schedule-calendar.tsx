@@ -39,7 +39,6 @@ export function ScheduleCalendar({
   navigateOnOutsideDayClick = true,
   maxEventsPerDay = 3,
 }: CalendarProps) {
-  const calendarRef = React.useRef<HTMLElement>(null);
   const today = React.useMemo(() => new Date(), []);
   const [internalMonth, setInternalMonth] = React.useState(() =>
     startOfMonth(defaultMonth ?? defaultSelected ?? today),
@@ -50,26 +49,6 @@ export function ScheduleCalendar({
 
   const visibleMonth = startOfMonth(month ?? internalMonth);
   const selectedDate = selected ?? internalSelected;
-
-  React.useEffect(() => {
-    if (!selectedDate) return;
-
-    const clearSelectionOnOutsideClick = (event: PointerEvent) => {
-      if (calendarRef.current?.contains(event.target as Node)) return;
-
-      if (selected === undefined) {
-        setInternalSelected(undefined);
-      }
-
-      onSelect?.(undefined);
-    };
-
-    document.addEventListener("pointerdown", clearSelectionOnOutsideClick);
-
-    return () => {
-      document.removeEventListener("pointerdown", clearSelectionOnOutsideClick);
-    };
-  }, [onSelect, selected, selectedDate]);
 
   const calendarDays = React.useMemo(
     () => getCalendarDays(visibleMonth, fixedWeeks, weekStartsOn),
@@ -113,7 +92,6 @@ export function ScheduleCalendar({
 
   return (
     <section
-      ref={calendarRef}
       aria-label="Calendar"
       className={cn("w-full min-w-0", classNames?.root, className)}
     >
